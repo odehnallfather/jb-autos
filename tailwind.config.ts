@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Nigerian-inspired colors
+				nigerian: {
+					green: '#008751',
+					'green-light': '#00B96B',
+					'green-dark': '#006440',
+					white: '#FFFFFF',
+					gold: '#FFD700',
+					'gold-light': '#FFF4A3',
 				}
 			},
 			borderRadius: {
@@ -84,11 +94,25 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					'0%': { opacity: '0', transform: 'translateY(20px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' }
+				},
+				'slide-in': {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(0)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.6s ease-out',
+				'slide-in': 'slide-in 0.5s ease-out'
+			},
+			backgroundImage: {
+				'gradient-nigerian': 'linear-gradient(135deg, #008751 0%, #00B96B 100%)',
+				'gradient-gold': 'linear-gradient(135deg, #FFD700 0%, #FFF4A3 100%)',
 			}
 		}
 	},
