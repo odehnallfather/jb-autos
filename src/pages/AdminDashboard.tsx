@@ -1,13 +1,18 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
-import { Car, Users, MessageSquare, BarChart3, LogOut } from 'lucide-react';
+import { Car, Users, MessageSquare, LogOut, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import DashboardStats from '@/components/admin/DashboardStats';
+import InventoryList from '@/components/admin/InventoryList';
+import LeadsList from '@/components/admin/LeadsList';
+import InquiriesList from '@/components/admin/InquiriesList';
 
 const AdminDashboard = () => {
   const { user, profile, signOut, isAdmin } = useAuth();
+  const [activeTab, setActiveTab] = useState('overview');
 
   if (!user || !isAdmin) {
     return <Navigate to="/auth" replace />;
@@ -34,6 +39,10 @@ const AdminDashboard = () => {
               <span className="text-sm text-gray-600">
                 Welcome, {profile?.full_name || profile?.email}
               </span>
+              <Button variant="outline" size="sm" onClick={() => window.location.href = '/'}>
+                <Home className="w-4 h-4 mr-2" />
+                Main Site
+              </Button>
               <Button variant="outline" size="sm" onClick={handleSignOut}>
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
@@ -45,106 +54,98 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Cars</CardTitle>
-              <Car className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">0</div>
-              <p className="text-xs text-muted-foreground">Available inventory</p>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Leads</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">0</div>
-              <p className="text-xs text-muted-foreground">Pending follow-up</p>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">New Inquiries</CardTitle>
-              <MessageSquare className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">0</div>
-              <p className="text-xs text-muted-foreground">Unread messages</p>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">This Month</CardTitle>
-              <BarChart3 className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">₦0</div>
-              <p className="text-xs text-muted-foreground">Total sales</p>
-            </CardContent>
-          </Card>
-        </div>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="overview" className="flex items-center space-x-2">
+              <Home className="w-4 h-4" />
+              <span>Overview</span>
+            </TabsTrigger>
+            <TabsTrigger value="inventory" className="flex items-center space-x-2">
+              <Car className="w-4 h-4" />
+              <span>Inventory</span>
+            </TabsTrigger>
+            <TabsTrigger value="leads" className="flex items-center space-x-2">
+              <Users className="w-4 h-4" />
+              <span>Leads</span>
+            </TabsTrigger>
+            <TabsTrigger value="inquiries" className="flex items-center space-x-2">
+              <MessageSquare className="w-4 h-4" />
+              <span>Inquiries</span>
+            </TabsTrigger>
+          </TabsList>
 
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="cursor-pointer hover:shadow-md transition-shadow">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Car className="w-5 h-5" />
-                <span>Manage Inventory</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Add, edit, or remove cars from your inventory
-              </p>
-              <Button className="mt-4 w-full" variant="outline">
-                View Inventory
-              </Button>
-            </CardContent>
-          </Card>
-          
-          <Card className="cursor-pointer hover:shadow-md transition-shadow">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Users className="w-5 h-5" />
-                <span>Customer Leads</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Track and manage customer inquiries and leads
-              </p>
-              <Button className="mt-4 w-full" variant="outline">
-                View Leads
-              </Button>
-            </CardContent>
-          </Card>
-          
-          <Card className="cursor-pointer hover:shadow-md transition-shadow">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <MessageSquare className="w-5 h-5" />
-                <span>Messages</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Respond to customer inquiries and messages
-              </p>
-              <Button className="mt-4 w-full" variant="outline">
-                View Messages
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+          <TabsContent value="overview" className="space-y-6">
+            <DashboardStats />
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div 
+                className="cursor-pointer hover:shadow-md transition-shadow"
+                onClick={() => setActiveTab('inventory')}
+              >
+                <div className="bg-white p-6 rounded-lg border">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <Car className="w-8 h-8 text-nigerian-green" />
+                    <h3 className="text-lg font-semibold">Manage Inventory</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Add, edit, or remove cars from your inventory
+                  </p>
+                  <Button className="w-full" variant="outline">
+                    View Inventory
+                  </Button>
+                </div>
+              </div>
+              
+              <div 
+                className="cursor-pointer hover:shadow-md transition-shadow"
+                onClick={() => setActiveTab('leads')}
+              >
+                <div className="bg-white p-6 rounded-lg border">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <Users className="w-8 h-8 text-nigerian-green" />
+                    <h3 className="text-lg font-semibold">Customer Leads</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Track and manage customer inquiries and leads
+                  </p>
+                  <Button className="w-full" variant="outline">
+                    View Leads
+                  </Button>
+                </div>
+              </div>
+              
+              <div 
+                className="cursor-pointer hover:shadow-md transition-shadow"
+                onClick={() => setActiveTab('inquiries')}
+              >
+                <div className="bg-white p-6 rounded-lg border">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <MessageSquare className="w-8 h-8 text-nigerian-green" />
+                    <h3 className="text-lg font-semibold">Messages</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Respond to customer inquiries and messages
+                  </p>
+                  <Button className="w-full" variant="outline">
+                    View Messages
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="inventory">
+            <InventoryList />
+          </TabsContent>
+
+          <TabsContent value="leads">
+            <LeadsList />
+          </TabsContent>
+
+          <TabsContent value="inquiries">
+            <InquiriesList />
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );
