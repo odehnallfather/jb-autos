@@ -19,40 +19,40 @@ import {
 const FeaturesSection = () => {
   const features = [
     {
-      icon: MessageCircle,
-      title: "AI Customer Support",
-      description: "24/7 multilingual chatbot that handles your customer inquiries, qualifies leads, and answers questions in multiple Nigerian languages.",
-      benefits: ["Instant customer response", "Lead qualification", "Multi-language support"]
-    },
-    {
-      icon: Phone,
-      title: "AI Phone Agent",
-      description: "Natural voice conversations that handle your customer calls, follow up with leads, and schedule appointments automatically for your dealership.",
-      benefits: ["Human-like conversations", "Automatic scheduling", "Call recording & analysis"]
-    },
-    {
-      icon: Camera,
-      title: "Virtual Car Tours",
-      description: "Showcase your inventory with 360° virtual tours, live video calls, and detailed car presentations for customers who can't visit in person.",
-      benefits: ["Remote car viewing", "Live demonstrations", "Detailed presentations"]
-    },
-    {
-      icon: BarChart3,
-      title: "Sales Analytics",
-      description: "AI-powered insights on your customers' behavior, sales performance, and inventory optimization to help you grow your business.",
-      benefits: ["Performance tracking", "Customer insights", "Sales optimization"]
+      icon: Shield,
+      title: "Quality Guarantee",
+      description: "Every car undergoes thorough inspection and comes with detailed history reports. We guarantee the quality and authenticity of all our vehicles.",
+      benefits: ["Comprehensive inspection", "Vehicle history report", "Quality certification"]
     },
     {
       icon: CreditCard,
-      title: "Payment Management",
-      description: "Integrated payment processing with installment plans, mobile money support, and automated payment tracking for your customers.",
-      benefits: ["Multiple payment options", "Installment tracking", "Payment automation"]
+      title: "Flexible Payment Options",
+      description: "We offer various payment plans including installments, bank transfers, and mobile money to make your car purchase convenient and affordable.",
+      benefits: ["Installment plans", "Multiple payment methods", "Flexible terms"]
+    },
+    {
+      icon: Camera,
+      title: "Virtual Car Viewing",
+      description: "Can't visit our showroom? View cars remotely with 360° photos, live video tours, and detailed presentations from the comfort of your home.",
+      benefits: ["360° car photos", "Live video tours", "Remote viewing"]
+    },
+    {
+      icon: MessageCircle,
+      title: "24/7 Customer Support",
+      description: "Our dedicated customer service team is available round the clock to answer your questions and help you find the perfect car for your needs.",
+      benefits: ["Always available", "Expert guidance", "Multilingual support"]
     },
     {
       icon: Calendar,
-      title: "Service Scheduling",
-      description: "Automated service appointment booking, maintenance reminders, and customer follow-up management for your after-sales services.",
-      benefits: ["Automated booking", "Service reminders", "Customer retention"]
+      title: "After-Sales Service",
+      description: "We provide comprehensive after-sales support including maintenance scheduling, service reminders, and ongoing customer care.",
+      benefits: ["Maintenance support", "Service reminders", "Ongoing care"]
+    },
+    {
+      icon: Car,
+      title: "Wide Vehicle Selection",
+      description: "Browse our extensive inventory of quality cars from popular brands including Toyota, Honda, Lexus, and more at competitive prices.",
+      benefits: ["Multiple brands", "Competitive pricing", "Quality vehicles"]
     }
   ];
 
@@ -62,18 +62,18 @@ const FeaturesSection = () => {
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-nigerian-green/10 text-nigerian-green text-sm font-medium mb-4">
-            🤖 Powerful Features
+            🚗 Why Choose JB AUTOS
           </div>
           
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Everything You Need to{' '}
-            <span className="gradient-text">Manage</span>{' '}
-            Your Dealership
+            Your Trusted{' '}
+            <span className="gradient-text">Car Partner</span>{' '}
+            in Lagos
           </h2>
           
           <p className="text-xl text-gray-600">
-            From customer engagement to sales automation, JB AUTOS handles your entire 
-            dealership operations while you focus on closing deals and growing your business.
+            At JB AUTOS, we're committed to providing you with the best car buying experience. 
+            From quality vehicles to exceptional service, we've got everything you need.
           </p>
         </div>
 
@@ -103,35 +103,35 @@ const FeaturesSection = () => {
           ))}
         </div>
 
-        {/* Business Growth Section */}
+        {/* About JB AUTOS Section */}
         <div className="bg-gradient-to-r from-nigerian-green/5 to-nigerian-green-light/5 rounded-3xl p-8 lg:p-12">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-3xl font-bold mb-4">
-                Built for Nigerian Car Dealers
+                About JB AUTOS
               </h3>
               <p className="text-gray-600 mb-6">
-                JB AUTOS understands the unique challenges of running a car dealership in Nigeria. 
-                Our system is optimized for local market conditions with offline capabilities, 
-                local language support, and integration with popular Nigerian payment platforms.
+                JB AUTOS has been serving the Lagos community for years, providing quality vehicles 
+                and exceptional customer service. We understand the local market and are committed 
+                to helping you find the perfect car that fits your needs and budget.
               </p>
               
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="flex items-center gap-3">
                   <Shield className="w-5 h-5 text-nigerian-green" />
-                  <span className="text-sm font-medium">Secure & Reliable</span>
+                  <span className="text-sm font-medium">Trusted Dealer</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Globe className="w-5 h-5 text-nigerian-green" />
-                  <span className="text-sm font-medium">Local Languages</span>
+                  <span className="text-sm font-medium">Local Expertise</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Zap className="w-5 h-5 text-nigerian-green" />
-                  <span className="text-sm font-medium">Fast & Efficient</span>
+                  <span className="text-sm font-medium">Quick Service</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <HeadphonesIcon className="w-5 h-5 text-nigerian-green" />
-                  <span className="text-sm font-medium">24/7 Support</span>
+                  <span className="text-sm font-medium">Great Support</span>
                 </div>
               </div>
             </div>
@@ -144,7 +144,7 @@ const FeaturesSection = () => {
                   </div>
                   <div>
                     <div className="font-semibold">Happy Customers</div>
-                    <div className="text-sm text-gray-500">Automated customer service</div>
+                    <div className="text-sm text-gray-500">500+ satisfied customers</div>
                   </div>
                 </div>
               </Card>
@@ -155,14 +155,14 @@ const FeaturesSection = () => {
                     <Car className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-semibold">Your Inventory</div>
-                    <div className="text-sm text-gray-500">Track and showcase your cars</div>
+                    <div className="font-semibold">Quality Vehicles</div>
+                    <div className="text-sm text-gray-500">50+ cars in stock</div>
                   </div>
                 </div>
               </Card>
 
               <Button className="w-full bg-gradient-nigerian hover:opacity-90">
-                Get Started Today
+                Visit Our Showroom
               </Button>
             </div>
           </div>

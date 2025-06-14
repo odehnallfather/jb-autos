@@ -12,18 +12,19 @@ const HeroSection = () => {
           <div className="space-y-8 animate-fade-in">
             <div className="space-y-4">
               <div className="inline-flex items-center px-3 py-1 rounded-full bg-nigerian-green/10 text-nigerian-green text-sm font-medium">
-                🚗 Smart Dealership Management
+                🚗 Quality Cars in Lagos
               </div>
               
               <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                Transform Your{' '}
-                <span className="gradient-text">Car Dealership</span>{' '}
-                with AI
+                Find Your{' '}
+                <span className="gradient-text">Perfect Car</span>{' '}
+                at JB AUTOS
               </h1>
               
               <p className="text-xl text-gray-600 leading-relaxed">
-                JB AUTOS helps you manage your entire dealership with AI-powered customer service, 
-                automated lead management, virtual car tours, and intelligent sales automation.
+                Welcome to JB AUTOS, your trusted car dealer in Lagos! We offer quality 
+                pre-owned and new vehicles with guaranteed authenticity, flexible payment 
+                options, and exceptional after-sales service.
               </p>
             </div>
 
@@ -31,15 +32,15 @@ const HeroSection = () => {
             <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500">
               <div className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-nigerian-green" />
-                <span>Secure & Reliable</span>
+                <span>Verified Quality</span>
               </div>
               <div className="flex items-center gap-2">
                 <Zap className="w-4 h-4 text-nigerian-green" />
-                <span>AI-Powered Automation</span>
+                <span>Quick Financing</span>
               </div>
               <div className="flex items-center gap-2">
                 <Globe className="w-4 h-4 text-nigerian-green" />
-                <span>Multi-Language Support</span>
+                <span>Warranty Included</span>
               </div>
             </div>
 
@@ -50,7 +51,7 @@ const HeroSection = () => {
                 className="bg-gradient-nigerian hover:opacity-90 text-white px-8 py-6 text-lg"
               >
                 <MessageCircle className="w-5 h-5 mr-2" />
-                Start Free Demo
+                Browse Our Cars
               </Button>
               
               <Button 
@@ -59,23 +60,23 @@ const HeroSection = () => {
                 className="border-nigerian-green text-nigerian-green hover:bg-nigerian-green hover:text-white px-8 py-6 text-lg"
               >
                 <Phone className="w-5 h-5 mr-2" />
-                Schedule Call
+                Call Us Now
               </Button>
             </div>
 
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-4 pt-8 border-t">
               <div className="text-center">
-                <div className="text-2xl font-bold text-nigerian-green">300%</div>
-                <div className="text-sm text-gray-600">Sales Increase</div>
+                <div className="text-2xl font-bold text-nigerian-green">500+</div>
+                <div className="text-sm text-gray-600">Happy Customers</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-nigerian-green">24/7</div>
-                <div className="text-sm text-gray-600">AI Availability</div>
+                <div className="text-2xl font-bold text-nigerian-green">50+</div>
+                <div className="text-sm text-gray-600">Cars Available</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-nigerian-green">90%</div>
-                <div className="text-sm text-gray-600">Time Saved</div>
+                <div className="text-2xl font-bold text-nigerian-green">5⭐</div>
+                <div className="text-sm text-gray-600">Customer Rating</div>
               </div>
             </div>
           </div>
@@ -93,7 +94,7 @@ const HeroSection = () => {
                         <Car className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <div className="font-semibold">JB AUTOS AI Assistant</div>
+                        <div className="font-semibold">JB AUTOS Customer Care</div>
                         <div className="text-sm text-gray-500">Online now</div>
                       </div>
                     </div>
@@ -114,7 +115,7 @@ const HeroSection = () => {
                       
                       <div className="flex justify-end">
                         <div className="bg-gradient-nigerian text-white rounded-2xl rounded-br-sm px-4 py-2 max-w-xs">
-                          <p className="text-sm">Would you like to schedule a virtual tour or visit our showroom?</p>
+                          <p className="text-sm">Would you like to schedule a test drive or visit our showroom?</p>
                         </div>
                       </div>
                     </div>
@@ -124,11 +125,11 @@ const HeroSection = () => {
                   <div className="grid grid-cols-2 gap-4 pt-4 border-t">
                     <div className="text-center p-3 bg-gray-50 rounded-lg">
                       <MessageCircle className="w-6 h-6 text-nigerian-green mx-auto mb-2" />
-                      <div className="text-xs font-medium">Smart Chat</div>
+                      <div className="text-xs font-medium">Live Chat</div>
                     </div>
                     <div className="text-center p-3 bg-gray-50 rounded-lg">
                       <Phone className="w-6 h-6 text-nigerian-green mx-auto mb-2" />
-                      <div className="text-xs font-medium">Voice Calls</div>
+                      <div className="text-xs font-medium">Call Support</div>
                     </div>
                   </div>
                 </div>
