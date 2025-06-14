@@ -12,16 +12,16 @@ const Footer = () => {
               <div className="w-10 h-10 bg-gradient-nigerian rounded-lg flex items-center justify-center">
                 <Car className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-bold">Kardilla</span>
+              <span className="text-2xl font-bold">JB AUTOS</span>
             </div>
             <p className="text-gray-400">
-              Nigeria's leading AI-powered car dealership platform. Connecting buyers and sellers 
-              with intelligent automation and seamless experiences.
+              Your trusted car dealership powered by AI technology. We provide quality vehicles 
+              and exceptional customer service to help you find your perfect car.
             </p>
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-nigerian-green" />
-                <span>Lagos, Abuja, Port Harcourt</span>
+                <span>Lagos, Nigeria</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-nigerian-green" />
@@ -29,55 +29,54 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-nigerian-green" />
-                <span>hello@kardilla.ng</span>
+                <span>info@jbautos.ng</span>
               </div>
             </div>
           </div>
 
-          {/* For Buyers */}
+          {/* Services */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">For Car Buyers</h3>
+            <h3 className="text-lg font-semibold">Our Services</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#" className="hover:text-white transition-colors">Browse Inventory</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">AI Car Finder</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Car Sales</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Virtual Tours</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Financing Options</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Car History Reports</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Insurance Services</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Car Financing</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Trade-In Service</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">After-Sales Support</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Car Insurance</a></li>
             </ul>
           </div>
 
-          {/* For Dealers */}
+          {/* Vehicle Types */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">For Car Dealers</h3>
+            <h3 className="text-lg font-semibold">Vehicle Types</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#" className="hover:text-white transition-colors">Join as Dealer</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">AI Lead Generation</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Inventory Management</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Customer Analytics</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Payment Solutions</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Marketing Tools</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Sedans</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">SUVs</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Hatchbacks</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Crossovers</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Luxury Cars</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Commercial Vehicles</a></li>
             </ul>
           </div>
 
-          {/* Support & Languages */}
+          {/* Support & Contact */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Support & Languages</h3>
+            <h3 className="text-lg font-semibold">Customer Support</h3>
             <ul className="space-y-2 text-gray-400">
               <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Contact Support</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
               <li><a href="#" className="hover:text-white transition-colors">WhatsApp Support</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Live Chat</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Book Appointment</a></li>
             </ul>
             
             <div className="space-y-2">
-              <div className="text-sm font-medium">Available Languages:</div>
-              <div className="flex flex-wrap gap-2 text-sm">
-                <span className="px-2 py-1 bg-gray-800 rounded">🇬🇧 English</span>
-                <span className="px-2 py-1 bg-gray-800 rounded">🇳🇬 Pidgin</span>
-                <span className="px-2 py-1 bg-gray-800 rounded">Yoruba</span>
-                <span className="px-2 py-1 bg-gray-800 rounded">Igbo</span>
-                <span className="px-2 py-1 bg-gray-800 rounded">Hausa</span>
+              <div className="text-sm font-medium">Business Hours:</div>
+              <div className="text-gray-400 text-sm">
+                <div>Mon - Fri: 8:00 AM - 6:00 PM</div>
+                <div>Saturday: 9:00 AM - 4:00 PM</div>
+                <div>Sunday: Closed</div>
               </div>
             </div>
           </div>
@@ -87,7 +86,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-gray-400 text-sm">
-              © 2024 Kardilla. All rights reserved. Made with ❤️ for Nigerian car dealers.
+              © 2024 JB AUTOS. All rights reserved. Quality cars, exceptional service.
             </div>
             
             <div className="flex items-center gap-6">
@@ -101,7 +100,6 @@ const Footer = () => {
                 <Globe className="w-4 h-4 text-nigerian-green" />
                 <select className="bg-transparent text-sm border-none focus:outline-none">
                   <option value="en">English</option>
-                  <option value="pcm">Pidgin</option>
                   <option value="yo">Yoruba</option>
                   <option value="ig">Igbo</option>
                   <option value="ha">Hausa</option>

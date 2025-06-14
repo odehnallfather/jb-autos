@@ -15,7 +15,7 @@ const Header = () => {
             <div className="w-10 h-10 bg-gradient-nigerian rounded-lg flex items-center justify-center">
               <Car className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl font-bold gradient-text">Kardilla</span>
+            <span className="text-2xl font-bold gradient-text">JB AUTOS</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -26,8 +26,8 @@ const Header = () => {
             <a href="#inventory" className="text-gray-700 hover:text-nigerian-green transition-colors">
               Inventory
             </a>
-            <a href="#dealers" className="text-gray-700 hover:text-nigerian-green transition-colors">
-              For Dealers
+            <a href="#dashboard" className="text-gray-700 hover:text-nigerian-green transition-colors">
+              Dashboard
             </a>
             <a href="#contact" className="text-gray-700 hover:text-nigerian-green transition-colors">
               Contact
@@ -75,8 +75,8 @@ const Header = () => {
               <a href="#inventory" className="text-gray-700 hover:text-nigerian-green transition-colors">
                 Inventory
               </a>
-              <a href="#dealers" className="text-gray-700 hover:text-nigerian-green transition-colors">
-                For Dealers
+              <a href="#dashboard" className="text-gray-700 hover:text-nigerian-green transition-colors">
+                Dashboard
               </a>
               <a href="#contact" className="text-gray-700 hover:text-nigerian-green transition-colors">
                 Contact

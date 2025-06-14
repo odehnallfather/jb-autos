@@ -12,12 +12,10 @@ const InventorySection = () => {
       model: "Camry",
       year: 2020,
       price: "₦7,500,000",
-      location: "Lagos",
       mileage: "45,000 km",
       fuel: "Petrol",
       image: "/placeholder.svg",
-      dealer: "AutoMax Lagos",
-      verified: true,
+      status: "Available",
       features: ["AC", "Leather Seats", "Navigation"]
     },
     {
@@ -26,12 +24,10 @@ const InventorySection = () => {
       model: "Accord",
       year: 2019,
       price: "₦6,200,000",
-      location: "Abuja",
       mileage: "38,000 km",
       fuel: "Petrol",
       image: "/placeholder.svg",
-      dealer: "Capital Cars",
-      verified: true,
+      status: "Available",
       features: ["Sunroof", "Backup Camera", "Bluetooth"]
     },
     {
@@ -40,12 +36,10 @@ const InventorySection = () => {
       model: "ES 350",
       year: 2021,
       price: "₦15,800,000",
-      location: "Lagos",
       mileage: "22,000 km",
       fuel: "Petrol",
       image: "/placeholder.svg",
-      dealer: "Luxury Motors",
-      verified: true,
+      status: "Reserved",
       features: ["Premium Sound", "Memory Seats", "HUD"]
     }
   ];
@@ -56,18 +50,17 @@ const InventorySection = () => {
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-nigerian-green/10 text-nigerian-green text-sm font-medium mb-4">
-            🚗 Featured Inventory
+            🚗 Current Inventory
           </div>
           
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Premium Cars from{' '}
-            <span className="gradient-text">Verified</span>{' '}
-            Nigerian Dealers
+            Quality Vehicles from{' '}
+            <span className="gradient-text">JB AUTOS</span>
           </h2>
           
           <p className="text-xl text-gray-600">
-            Browse thousands of quality vehicles from trusted dealers across Nigeria. 
-            Every car is verified and comes with detailed history reports.
+            Browse our carefully selected inventory of quality vehicles. Each car is inspected, 
+            verified, and comes with detailed history reports for your peace of mind.
           </p>
         </div>
 
@@ -80,11 +73,9 @@ const InventorySection = () => {
                 <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
                   <Car className="w-16 h-16 text-gray-400" />
                 </div>
-                {car.verified && (
-                  <Badge className="absolute top-3 left-3 bg-nigerian-green text-white">
-                    ✓ Verified
-                  </Badge>
-                )}
+                <Badge className={`absolute top-3 left-3 ${car.status === 'Available' ? 'bg-nigerian-green' : 'bg-orange-500'} text-white`}>
+                  {car.status}
+                </Badge>
                 <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1">
                   <span className="text-sm font-bold text-nigerian-green">{car.price}</span>
                 </div>
@@ -99,9 +90,7 @@ const InventorySection = () => {
                     </h3>
                     <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
                       <MapPin className="w-4 h-4" />
-                      <span>{car.location}</span>
-                      <span>•</span>
-                      <span>{car.dealer}</span>
+                      <span>JB AUTOS Showroom</span>
                     </div>
                   </div>
 
@@ -130,7 +119,7 @@ const InventorySection = () => {
                   <div className="grid grid-cols-2 gap-3 pt-4">
                     <Button variant="outline" size="sm" className="flex items-center gap-1">
                       <MessageCircle className="w-4 h-4" />
-                      Chat
+                      Inquire
                     </Button>
                     <Button size="sm" className="bg-gradient-nigerian hover:opacity-90 flex items-center gap-1">
                       <Phone className="w-4 h-4" />
@@ -147,41 +136,41 @@ const InventorySection = () => {
         <div className="text-center space-y-6">
           <div className="space-y-4">
             <h3 className="text-2xl font-bold">
-              Ready to Find Your Perfect Car?
+              Looking for Something Specific?
             </h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Our AI assistant can help you find exactly what you're looking for in seconds. 
-              Tell us your budget, preferences, and location - we'll do the rest.
+              Our AI assistant can help you find the perfect vehicle for your needs and budget. 
+              Tell us what you're looking for and we'll search our inventory and upcoming arrivals.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-gradient-nigerian hover:opacity-90 px-8">
               <MessageCircle className="w-5 h-5 mr-2" />
-              Start Car Search with AI
+              Find My Perfect Car
             </Button>
             <Button size="lg" variant="outline" className="border-nigerian-green text-nigerian-green hover:bg-nigerian-green hover:text-white px-8">
-              Browse All Inventory
+              Schedule Showroom Visit
             </Button>
           </div>
 
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t max-w-2xl mx-auto">
             <div className="text-center">
-              <div className="text-2xl font-bold text-nigerian-green">15,000+</div>
-              <div className="text-sm text-gray-600">Cars Available</div>
+              <div className="text-2xl font-bold text-nigerian-green">50+</div>
+              <div className="text-sm text-gray-600">Cars in Stock</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-nigerian-green">500+</div>
-              <div className="text-sm text-gray-600">Verified Dealers</div>
+              <div className="text-2xl font-bold text-nigerian-green">100%</div>
+              <div className="text-sm text-gray-600">Verified Quality</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-nigerian-green">36</div>
-              <div className="text-sm text-gray-600">States Covered</div>
+              <div className="text-2xl font-bold text-nigerian-green">5⭐</div>
+              <div className="text-sm text-gray-600">Customer Rating</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-nigerian-green">24/7</div>
-              <div className="text-sm text-gray-600">AI Support</div>
+              <div className="text-sm text-gray-600">Support</div>
             </div>
           </div>
         </div>

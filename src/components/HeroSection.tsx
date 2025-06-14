@@ -12,18 +12,18 @@ const HeroSection = () => {
           <div className="space-y-8 animate-fade-in">
             <div className="space-y-4">
               <div className="inline-flex items-center px-3 py-1 rounded-full bg-nigerian-green/10 text-nigerian-green text-sm font-medium">
-                🇳🇬 Built for Nigerian Car Dealers
+                🚗 Smart Dealership Management
               </div>
               
               <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                Sell More Cars with{' '}
-                <span className="gradient-text">AI-Powered</span>{' '}
-                Technology
+                Transform Your{' '}
+                <span className="gradient-text">Car Dealership</span>{' '}
+                with AI
               </h1>
               
               <p className="text-xl text-gray-600 leading-relaxed">
-                Kardilla helps Nigerian car dealers increase sales by 300% through intelligent lead generation, 
-                AI phone agents, virtual showings, and seamless customer management.
+                JB AUTOS helps you manage your entire dealership with AI-powered customer service, 
+                automated lead management, virtual car tours, and intelligent sales automation.
               </p>
             </div>
 
@@ -31,7 +31,7 @@ const HeroSection = () => {
             <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500">
               <div className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-nigerian-green" />
-                <span>Verified Dealers Only</span>
+                <span>Secure & Reliable</span>
               </div>
               <div className="flex items-center gap-2">
                 <Zap className="w-4 h-4 text-nigerian-green" />
@@ -50,7 +50,7 @@ const HeroSection = () => {
                 className="bg-gradient-nigerian hover:opacity-90 text-white px-8 py-6 text-lg"
               >
                 <MessageCircle className="w-5 h-5 mr-2" />
-                Start Free Chat Demo
+                Start Free Demo
               </Button>
               
               <Button 
@@ -59,7 +59,7 @@ const HeroSection = () => {
                 className="border-nigerian-green text-nigerian-green hover:bg-nigerian-green hover:text-white px-8 py-6 text-lg"
               >
                 <Phone className="w-5 h-5 mr-2" />
-                Try AI Phone Agent
+                Schedule Call
               </Button>
             </div>
 
@@ -74,8 +74,8 @@ const HeroSection = () => {
                 <div className="text-sm text-gray-600">AI Availability</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-nigerian-green">5+</div>
-                <div className="text-sm text-gray-600">Languages</div>
+                <div className="text-2xl font-bold text-nigerian-green">90%</div>
+                <div className="text-sm text-gray-600">Time Saved</div>
               </div>
             </div>
           </div>
@@ -93,7 +93,7 @@ const HeroSection = () => {
                         <Car className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <div className="font-semibold">Kardilla AI Assistant</div>
+                        <div className="font-semibold">JB AUTOS AI Assistant</div>
                         <div className="text-sm text-gray-500">Online now</div>
                       </div>
                     </div>
@@ -102,19 +102,19 @@ const HeroSection = () => {
                     <div className="space-y-3">
                       <div className="flex justify-start">
                         <div className="bg-gray-100 rounded-2xl rounded-bl-sm px-4 py-2 max-w-xs">
-                          <p className="text-sm">Hello! I'm looking for a Toyota Camry under ₦8M. Can you help?</p>
+                          <p className="text-sm">Hello! I'm looking for a Toyota Camry under ₦8M. Do you have any available?</p>
                         </div>
                       </div>
                       
                       <div className="flex justify-end">
                         <div className="bg-gradient-nigerian text-white rounded-2xl rounded-br-sm px-4 py-2 max-w-xs">
-                          <p className="text-sm">Absolutely! I found 3 perfect Toyota Camrys in your budget. Let me show you the best options with photos and details.</p>
+                          <p className="text-sm">Yes! I have 2 excellent Toyota Camrys in your budget. Let me show you the details and photos.</p>
                         </div>
                       </div>
                       
                       <div className="flex justify-end">
                         <div className="bg-gradient-nigerian text-white rounded-2xl rounded-br-sm px-4 py-2 max-w-xs">
-                          <p className="text-sm">Would you prefer to see them via virtual tour or schedule a physical viewing?</p>
+                          <p className="text-sm">Would you like to schedule a virtual tour or visit our showroom?</p>
                         </div>
                       </div>
                     </div>
@@ -124,7 +124,7 @@ const HeroSection = () => {
                   <div className="grid grid-cols-2 gap-4 pt-4 border-t">
                     <div className="text-center p-3 bg-gray-50 rounded-lg">
                       <MessageCircle className="w-6 h-6 text-nigerian-green mx-auto mb-2" />
-                      <div className="text-xs font-medium">WhatsApp Ready</div>
+                      <div className="text-xs font-medium">Smart Chat</div>
                     </div>
                     <div className="text-center p-3 bg-gray-50 rounded-lg">
                       <Phone className="w-6 h-6 text-nigerian-green mx-auto mb-2" />

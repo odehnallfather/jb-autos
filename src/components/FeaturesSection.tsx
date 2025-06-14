@@ -20,39 +20,39 @@ const FeaturesSection = () => {
   const features = [
     {
       icon: MessageCircle,
-      title: "AI Chat Assistant",
-      description: "24/7 multilingual chatbot that qualifies leads, answers questions in English, Pidgin, Yoruba, Igbo, and Hausa.",
-      benefits: ["300% increase in lead response", "90% faster qualification", "24/7 availability"]
+      title: "AI Customer Support",
+      description: "24/7 multilingual chatbot that handles customer inquiries, qualifies leads, and answers questions in multiple Nigerian languages.",
+      benefits: ["Instant customer response", "Lead qualification", "Multi-language support"]
     },
     {
       icon: Phone,
       title: "AI Phone Agent",
-      description: "Natural voice conversations that handle inbound calls, follow up with leads, and schedule appointments automatically.",
-      benefits: ["Human-like conversations", "Multi-language support", "Automatic call recording"]
+      description: "Natural voice conversations that handle customer calls, follow up with leads, and schedule appointments automatically.",
+      benefits: ["Human-like conversations", "Automatic scheduling", "Call recording & analysis"]
     },
     {
       icon: Camera,
       title: "Virtual Car Tours",
-      description: "360° virtual showings, live video calls with dealers, and AR features to showcase car details remotely.",
-      benefits: ["Reduce physical visits by 60%", "Serve more customers", "3D car visualization"]
+      description: "Showcase your inventory with 360° virtual tours, live video calls, and detailed car presentations for remote customers.",
+      benefits: ["Remote car viewing", "Live demonstrations", "Detailed presentations"]
     },
     {
       icon: BarChart3,
-      title: "Smart Analytics",
-      description: "AI-powered insights on customer preferences, market demand, and sales performance across Nigeria.",
-      benefits: ["Predict market trends", "Customer behavior insights", "Sales optimization"]
+      title: "Sales Analytics",
+      description: "AI-powered insights on customer behavior, sales performance, and inventory optimization to grow your business.",
+      benefits: ["Performance tracking", "Customer insights", "Sales optimization"]
     },
     {
       icon: CreditCard,
-      title: "Flexible Payments",
-      description: "Integrated with Paystack & Flutterwave for seamless payments, installment plans, and mobile money support.",
-      benefits: ["Multiple payment options", "Installment calculators", "Mobile money integration"]
+      title: "Payment Management",
+      description: "Integrated payment processing with installment plans, mobile money support, and automated payment tracking.",
+      benefits: ["Multiple payment options", "Installment tracking", "Payment automation"]
     },
     {
       icon: Calendar,
-      title: "After-Sales Support",
-      description: "Automated service scheduling, WhatsApp reminders, and customer feedback management system.",
-      benefits: ["Automated scheduling", "Customer retention", "Service reminders"]
+      title: "Service Scheduling",
+      description: "Automated service appointment booking, maintenance reminders, and customer follow-up management.",
+      benefits: ["Automated booking", "Service reminders", "Customer retention"]
     }
   ];
 
@@ -62,18 +62,18 @@ const FeaturesSection = () => {
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-nigerian-green/10 text-nigerian-green text-sm font-medium mb-4">
-            🤖 AI-Powered Features
+            🤖 Powerful Features
           </div>
           
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
             Everything You Need to{' '}
-            <span className="gradient-text">Dominate</span>{' '}
-            Car Sales in Nigeria
+            <span className="gradient-text">Manage</span>{' '}
+            Your Dealership
           </h2>
           
           <p className="text-xl text-gray-600">
-            From lead generation to after-sales support, Kardilla automates your entire sales process 
-            while you focus on what matters most - closing deals.
+            From customer engagement to sales automation, JB AUTOS handles your entire 
+            dealership operations while you focus on closing deals and growing your business.
           </p>
         </div>
 
@@ -103,31 +103,31 @@ const FeaturesSection = () => {
           ))}
         </div>
 
-        {/* Trust Building Section */}
+        {/* Business Growth Section */}
         <div className="bg-gradient-to-r from-nigerian-green/5 to-nigerian-green-light/5 rounded-3xl p-8 lg:p-12">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-3xl font-bold mb-4">
-                Built Specifically for Nigerian Market
+                Built for Nigerian Car Dealers
               </h3>
               <p className="text-gray-600 mb-6">
-                We understand the unique challenges of selling cars in Nigeria - from connectivity issues 
-                to payment preferences. That's why Kardilla is optimized for the Nigerian market with 
-                offline capabilities, local language support, and integration with popular payment platforms.
+                JB AUTOS understands the unique challenges of running a car dealership in Nigeria. 
+                Our system is optimized for local market conditions with offline capabilities, 
+                local language support, and integration with popular Nigerian payment platforms.
               </p>
               
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="flex items-center gap-3">
                   <Shield className="w-5 h-5 text-nigerian-green" />
-                  <span className="text-sm font-medium">Verified Dealers</span>
+                  <span className="text-sm font-medium">Secure & Reliable</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Globe className="w-5 h-5 text-nigerian-green" />
-                  <span className="text-sm font-medium">5+ Local Languages</span>
+                  <span className="text-sm font-medium">Local Languages</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Zap className="w-5 h-5 text-nigerian-green" />
-                  <span className="text-sm font-medium">Offline Capable</span>
+                  <span className="text-sm font-medium">Fast & Efficient</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <HeadphonesIcon className="w-5 h-5 text-nigerian-green" />
@@ -143,8 +143,8 @@ const FeaturesSection = () => {
                     <Users className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <div className="font-semibold">500+ Active Dealers</div>
-                    <div className="text-sm text-gray-500">Across Lagos, Abuja, Port Harcourt</div>
+                    <div className="font-semibold">Happy Customers</div>
+                    <div className="text-sm text-gray-500">Automated customer service</div>
                   </div>
                 </div>
               </Card>
@@ -155,14 +155,14 @@ const FeaturesSection = () => {
                     <Car className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-semibold">10,000+ Cars Sold</div>
-                    <div className="text-sm text-gray-500">Through our platform monthly</div>
+                    <div className="font-semibold">Inventory Management</div>
+                    <div className="text-sm text-gray-500">Track and showcase your cars</div>
                   </div>
                 </div>
               </Card>
 
               <Button className="w-full bg-gradient-nigerian hover:opacity-90">
-                Join 500+ Successful Dealers
+                Get Started Today
               </Button>
             </div>
           </div>
