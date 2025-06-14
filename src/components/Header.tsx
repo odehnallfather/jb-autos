@@ -1,13 +1,14 @@
 
 import { useState } from 'react';
+import { Car, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { MessageCircle, Car, Phone, Globe } from 'lucide-react';
+import AuthButton from '@/components/AuthButton';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b z-50">
+    <header className="bg-white shadow-lg sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -15,72 +16,88 @@ const Header = () => {
             <div className="w-10 h-10 bg-gradient-nigerian rounded-lg flex items-center justify-center">
               <Car className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl font-bold gradient-text">JB AUTOS</span>
+            <span className="text-2xl font-bold bg-gradient-nigerian bg-clip-text text-transparent">
+              JB AUTOS
+            </span>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-gray-700 hover:text-nigerian-green transition-colors">
-              Features
+            <a href="#home" className="text-gray-700 hover:text-nigerian-green transition-colors">
+              Home
             </a>
             <a href="#inventory" className="text-gray-700 hover:text-nigerian-green transition-colors">
               Inventory
             </a>
-            <a href="#dashboard" className="text-gray-700 hover:text-nigerian-green transition-colors">
-              Dashboard
+            <a href="#services" className="text-gray-700 hover:text-nigerian-green transition-colors">
+              Services
+            </a>
+            <a href="#about" className="text-gray-700 hover:text-nigerian-green transition-colors">
+              About
             </a>
             <a href="#contact" className="text-gray-700 hover:text-nigerian-green transition-colors">
               Contact
             </a>
           </nav>
 
-          {/* Language & Actions */}
-          <div className="flex items-center space-x-4">
-            <Button variant="outline" size="sm" className="hidden sm:flex items-center space-x-1">
-              <Globe className="w-4 h-4" />
-              <span>EN</span>
-            </Button>
-            
-            <Button variant="outline" size="sm" className="flex items-center space-x-1">
-              <Phone className="w-4 h-4" />
-              <span className="hidden sm:inline">Call AI Agent</span>
-            </Button>
-            
-            <Button className="bg-gradient-nigerian hover:opacity-90">
-              <MessageCircle className="w-4 h-4 mr-2" />
-              Chat Now
-            </Button>
-
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden p-2"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <div className="w-6 h-6 flex flex-col justify-center items-center">
-                <div className={`w-4 h-0.5 bg-gray-600 transition-all ${isMenuOpen ? 'rotate-45 translate-y-1' : ''}`} />
-                <div className={`w-4 h-0.5 bg-gray-600 my-1 transition-all ${isMenuOpen ? 'opacity-0' : ''}`} />
-                <div className={`w-4 h-0.5 bg-gray-600 transition-all ${isMenuOpen ? '-rotate-45 -translate-y-1' : ''}`} />
-              </div>
-            </button>
+          {/* Desktop Auth Button */}
+          <div className="hidden md:block">
+            <AuthButton />
           </div>
+
+          {/* Mobile menu button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </Button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t animate-slide-in">
+          <div className="md:hidden py-4 border-t border-gray-200">
             <nav className="flex flex-col space-y-4">
-              <a href="#features" className="text-gray-700 hover:text-nigerian-green transition-colors">
-                Features
+              <a 
+                href="#home" 
+                className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Home
               </a>
-              <a href="#inventory" className="text-gray-700 hover:text-nigerian-green transition-colors">
+              <a 
+                href="#inventory" 
+                className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Inventory
               </a>
-              <a href="#dashboard" className="text-gray-700 hover:text-nigerian-green transition-colors">
-                Dashboard
+              <a 
+                href="#services" 
+                className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Services
               </a>
-              <a href="#contact" className="text-gray-700 hover:text-nigerian-green transition-colors">
+              <a 
+                href="#about" 
+                className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About
+              </a>
+              <a 
+                href="#contact" 
+                className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Contact
               </a>
+              <div className="px-4 py-2">
+                <AuthButton />
+              </div>
             </nav>
           </div>
         )}
