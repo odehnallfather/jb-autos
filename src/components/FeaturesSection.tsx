@@ -21,37 +21,37 @@ const FeaturesSection = () => {
     {
       icon: MessageCircle,
       title: "AI Customer Support",
-      description: "24/7 multilingual chatbot that handles customer inquiries, qualifies leads, and answers questions in multiple Nigerian languages.",
+      description: "24/7 multilingual chatbot that handles your customer inquiries, qualifies leads, and answers questions in multiple Nigerian languages.",
       benefits: ["Instant customer response", "Lead qualification", "Multi-language support"]
     },
     {
       icon: Phone,
       title: "AI Phone Agent",
-      description: "Natural voice conversations that handle customer calls, follow up with leads, and schedule appointments automatically.",
+      description: "Natural voice conversations that handle your customer calls, follow up with leads, and schedule appointments automatically for your dealership.",
       benefits: ["Human-like conversations", "Automatic scheduling", "Call recording & analysis"]
     },
     {
       icon: Camera,
       title: "Virtual Car Tours",
-      description: "Showcase your inventory with 360° virtual tours, live video calls, and detailed car presentations for remote customers.",
+      description: "Showcase your inventory with 360° virtual tours, live video calls, and detailed car presentations for customers who can't visit in person.",
       benefits: ["Remote car viewing", "Live demonstrations", "Detailed presentations"]
     },
     {
       icon: BarChart3,
       title: "Sales Analytics",
-      description: "AI-powered insights on customer behavior, sales performance, and inventory optimization to grow your business.",
+      description: "AI-powered insights on your customers' behavior, sales performance, and inventory optimization to help you grow your business.",
       benefits: ["Performance tracking", "Customer insights", "Sales optimization"]
     },
     {
       icon: CreditCard,
       title: "Payment Management",
-      description: "Integrated payment processing with installment plans, mobile money support, and automated payment tracking.",
+      description: "Integrated payment processing with installment plans, mobile money support, and automated payment tracking for your customers.",
       benefits: ["Multiple payment options", "Installment tracking", "Payment automation"]
     },
     {
       icon: Calendar,
       title: "Service Scheduling",
-      description: "Automated service appointment booking, maintenance reminders, and customer follow-up management.",
+      description: "Automated service appointment booking, maintenance reminders, and customer follow-up management for your after-sales services.",
       benefits: ["Automated booking", "Service reminders", "Customer retention"]
     }
   ];
@@ -155,7 +155,7 @@ const FeaturesSection = () => {
                     <Car className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-semibold">Inventory Management</div>
+                    <div className="font-semibold">Your Inventory</div>
                     <div className="text-sm text-gray-500">Track and showcase your cars</div>
                   </div>
                 </div>

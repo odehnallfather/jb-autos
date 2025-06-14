@@ -108,7 +108,7 @@ const HeroSection = () => {
                       
                       <div className="flex justify-end">
                         <div className="bg-gradient-nigerian text-white rounded-2xl rounded-br-sm px-4 py-2 max-w-xs">
-                          <p className="text-sm">Yes! I have 2 excellent Toyota Camrys in your budget. Let me show you the details and photos.</p>
+                          <p className="text-sm">Yes! We have 2 excellent Toyota Camrys in your budget. Let me show you the details and photos.</p>
                         </div>
                       </div>
                       

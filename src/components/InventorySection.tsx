@@ -50,7 +50,7 @@ const InventorySection = () => {
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-nigerian-green/10 text-nigerian-green text-sm font-medium mb-4">
-            🚗 Current Inventory
+            🚗 Our Current Inventory
           </div>
           
           <h2 className="text-4xl lg:text-5xl font-bold mb-6">
@@ -140,7 +140,7 @@ const InventorySection = () => {
             </h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Our AI assistant can help you find the perfect vehicle for your needs and budget. 
-              Tell us what you're looking for and we'll search our inventory and upcoming arrivals.
+              Tell us what you're looking for and we'll check our inventory and upcoming arrivals.
             </p>
           </div>
 
@@ -150,7 +150,7 @@ const InventorySection = () => {
               Find My Perfect Car
             </Button>
             <Button size="lg" variant="outline" className="border-nigerian-green text-nigerian-green hover:bg-nigerian-green hover:text-white px-8">
-              Schedule Showroom Visit
+              Visit Our Showroom
             </Button>
           </div>
 
