@@ -1,7 +1,14 @@
 
 import { useState } from 'react';
-import { Car, Menu, X } from 'lucide-react';
+import { Car, Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@/components/ui/navigation-menu';
 import AuthButton from '@/components/AuthButton';
 
 const Header = () => {
@@ -26,9 +33,40 @@ const Header = () => {
             <a href="#home" className="text-gray-700 hover:text-nigerian-green transition-colors">
               Home
             </a>
-            <a href="#inventory" className="text-gray-700 hover:text-nigerian-green transition-colors">
-              Inventory
-            </a>
+            
+            {/* Available Cars Dropdown */}
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="text-gray-700 hover:text-nigerian-green transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent">
+                    Available Cars
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="bg-white border shadow-lg rounded-md p-2 min-w-[200px]">
+                    <div className="space-y-2">
+                      <a 
+                        href="#brand-new" 
+                        className="block px-4 py-2 text-gray-700 hover:text-nigerian-green hover:bg-gray-50 rounded transition-colors"
+                      >
+                        Brand New
+                      </a>
+                      <a 
+                        href="#toks" 
+                        className="block px-4 py-2 text-gray-700 hover:text-nigerian-green hover:bg-gray-50 rounded transition-colors"
+                      >
+                        Toks
+                      </a>
+                      <a 
+                        href="#grade-a" 
+                        className="block px-4 py-2 text-gray-700 hover:text-nigerian-green hover:bg-gray-50 rounded transition-colors"
+                      >
+                        Grade-A
+                      </a>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+
             <a href="#services" className="text-gray-700 hover:text-nigerian-green transition-colors">
               Services
             </a>
@@ -67,13 +105,35 @@ const Header = () => {
               >
                 Home
               </a>
-              <a 
-                href="#inventory" 
-                className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Inventory
-              </a>
+              
+              {/* Mobile Available Cars Section */}
+              <div className="px-4 py-2">
+                <div className="text-gray-700 font-medium mb-2">Available Cars</div>
+                <div className="ml-4 space-y-2">
+                  <a 
+                    href="#brand-new" 
+                    className="block text-gray-600 hover:text-nigerian-green transition-colors py-1"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Brand New
+                  </a>
+                  <a 
+                    href="#toks" 
+                    className="block text-gray-600 hover:text-nigerian-green transition-colors py-1"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Toks
+                  </a>
+                  <a 
+                    href="#grade-a" 
+                    className="block text-gray-600 hover:text-nigerian-green transition-colors py-1"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Grade-A
+                  </a>
+                </div>
+              </div>
+
               <a 
                 href="#services" 
                 className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
