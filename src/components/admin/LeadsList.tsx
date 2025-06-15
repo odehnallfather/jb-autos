@@ -10,13 +10,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Phone, Mail, MessageSquare, User, Search } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { formatDistanceToNow } from 'date-fns';
-import type { Tables } from '@/integrations/supabase/types';
+import type { Tables, Enums } from '@/integrations/supabase/types';
 
 type Lead = Tables<'leads'>;
+type LeadStatus = Enums<'lead_status'>;
 
 const LeadsList = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | LeadStatus>('all');
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -46,7 +47,7 @@ const LeadsList = () => {
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: async ({ leadId, status }: { leadId: string; status: string }) => {
+    mutationFn: async ({ leadId, status }: { leadId: string; status: LeadStatus }) => {
       const { error } = await supabase
         .from('leads')
         .update({ status, updated_at: new Date().toISOString() })
@@ -96,7 +97,7 @@ const LeadsList = () => {
             className="pl-10"
           />
         </div>
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
+        <Select value={statusFilter} onValueChange={(value: 'all' | LeadStatus) => setStatusFilter(value)}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Filter by status" />
           </SelectTrigger>
@@ -174,7 +175,7 @@ const LeadsList = () => {
               <div className="flex space-x-2">
                 <Select
                   value={lead.status || 'new'}
-                  onValueChange={(status) => updateStatusMutation.mutate({ leadId: lead.id, status })}
+                  onValueChange={(status: LeadStatus) => updateStatusMutation.mutate({ leadId: lead.id, status })}
                 >
                   <SelectTrigger className="w-40">
                     <SelectValue />

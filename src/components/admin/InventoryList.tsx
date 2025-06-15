@@ -9,13 +9,14 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Pencil, Trash2, Plus, Search } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import type { Tables } from '@/integrations/supabase/types';
+import type { Tables, Enums } from '@/integrations/supabase/types';
 
 type Car = Tables<'cars'>;
+type CarStatus = Enums<'car_status'>;
 
 const InventoryList = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | CarStatus>('all');
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -93,7 +94,7 @@ const InventoryList = () => {
             className="pl-10"
           />
         </div>
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
+        <Select value={statusFilter} onValueChange={(value: 'all' | CarStatus) => setStatusFilter(value)}>
           <SelectTrigger className="w-48">
             <SelectValue placeholder="Filter by status" />
           </SelectTrigger>
