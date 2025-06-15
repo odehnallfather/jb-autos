@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MessageCircle, Phone, Car, MapPin, Calendar, Fuel } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const InventorySection = () => {
   const sampleCars = [
@@ -139,19 +140,23 @@ const InventorySection = () => {
               Looking for Something Specific?
             </h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Our AI assistant can help you find the perfect vehicle for your needs and budget. 
-              Tell us what you're looking for and we'll check our inventory and upcoming arrivals.
+              Browse our full inventory of quality vehicles or contact us to help you 
+              find the perfect car for your needs and budget.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-gradient-nigerian hover:opacity-90 px-8">
-              <MessageCircle className="w-5 h-5 mr-2" />
-              Find My Perfect Car
-            </Button>
-            <Button size="lg" variant="outline" className="border-nigerian-green text-nigerian-green hover:bg-nigerian-green hover:text-white px-8">
-              Visit Our Showroom
-            </Button>
+            <Link to="/cars">
+              <Button size="lg" className="bg-gradient-nigerian hover:opacity-90 px-8">
+                <Car className="w-5 h-5 mr-2" />
+                Browse All Cars
+              </Button>
+            </Link>
+            <Link to="/about">
+              <Button size="lg" variant="outline" className="border-nigerian-green text-nigerian-green hover:bg-nigerian-green hover:text-white px-8">
+                Visit Our Showroom
+              </Button>
+            </Link>
           </div>
 
           {/* Quick Stats */}
