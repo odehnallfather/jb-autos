@@ -13,7 +13,13 @@ import {
   Users, 
   Trophy,
   CheckCircle,
-  ArrowRight
+  ArrowRight,
+  Settings,
+  Phone,
+  Camera,
+  Zap,
+  HeadphonesIcon,
+  Globe
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -42,6 +48,50 @@ const Services = () => {
       ]
     },
     {
+      icon: Settings,
+      title: "Verified Parts & Accessories",
+      description: "Genuine automotive parts and accessories from trusted suppliers. Quality guaranteed parts for all major car brands.",
+      features: [
+        "Original Equipment Manufacturer (OEM) parts",
+        "Aftermarket certified components",
+        "Performance upgrades available",
+        "Installation service included"
+      ]
+    },
+    {
+      icon: Wrench,
+      title: "Car Customization",
+      description: "Transform your vehicle with our professional customization services. From performance upgrades to aesthetic enhancements.",
+      features: [
+        "Interior & exterior styling",
+        "Performance tuning & upgrades",
+        "Audio system installation",
+        "Window tinting & wrapping"
+      ]
+    },
+    {
+      icon: Users,
+      title: "Verified Mechanics Network",
+      description: "Access our network of certified and trusted mechanics across Lagos. Quality service from vetted professionals.",
+      features: [
+        "Pre-screened certified mechanics",
+        "Transparent pricing",
+        "Quality guarantee on all work",
+        "Emergency repair services"
+      ]
+    },
+    {
+      icon: Phone,
+      title: "24/7 Roadside Support",
+      description: "Round-the-clock emergency assistance from our partner mechanics. Help is just a phone call away.",
+      features: [
+        "Emergency towing services",
+        "On-site minor repairs",
+        "Battery jump-start",
+        "Flat tire assistance"
+      ]
+    },
+    {
       icon: CreditCard,
       title: "Car Financing",
       description: "Flexible financing options to help you drive away with your dream car today. We work with multiple financial institutions.",
@@ -50,6 +100,17 @@ const Services = () => {
         "Flexible payment terms",
         "Quick approval process",
         "Down payment options"
+      ]
+    },
+    {
+      icon: Camera,
+      title: "Virtual Car Viewing",
+      description: "Can't visit our showroom? View cars remotely with 360° photos, live video tours, and AI-powered virtual assistance.",
+      features: [
+        "360° car photography",
+        "Live video call tours",
+        "AI-powered car recommendations",
+        "Virtual reality previews"
       ]
     },
     {
@@ -72,17 +133,6 @@ const Services = () => {
         "Document transfer services",
         "Insurance coordination",
         "License plate processing"
-      ]
-    },
-    {
-      icon: Wrench,
-      title: "After-Sales Support",
-      description: "Comprehensive support after your purchase including maintenance referrals, warranty services, and ongoing customer care.",
-      features: [
-        "Maintenance recommendations",
-        "Trusted mechanic referrals",
-        "Warranty claim assistance",
-        "24/7 customer support"
       ]
     }
   ];
@@ -165,8 +215,46 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Why Choose Us */}
+      {/* AI-Powered Features Section */}
       <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">AI-Powered Innovation</h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Experience the future of car shopping with our cutting-edge technology solutions.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+              <Camera className="w-12 h-12 text-nigerian-green mx-auto mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Virtual Showroom</h3>
+              <p className="text-gray-600 text-sm">360° car viewing and virtual tours</p>
+            </Card>
+            
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+              <Zap className="w-12 h-12 text-nigerian-green mx-auto mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Smart Recommendations</h3>
+              <p className="text-gray-600 text-sm">AI-powered car matching</p>
+            </Card>
+            
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+              <HeadphonesIcon className="w-12 h-12 text-nigerian-green mx-auto mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Virtual Assistant</h3>
+              <p className="text-gray-600 text-sm">24/7 AI customer support</p>
+            </Card>
+            
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+              <Globe className="w-12 h-12 text-nigerian-green mx-auto mb-4" />
+              <h3 className="font-semibold text-lg mb-2">Remote Services</h3>
+              <p className="text-gray-600 text-sm">Complete car buying from home</p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose JB AUTOS?</h2>
@@ -190,33 +278,33 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gray-100">
+      <section className="py-16 bg-gradient-nigerian text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Get Started?</h2>
-          <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+          <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
             Whether you're looking to buy, sell, or trade your vehicle, our team is here to provide exceptional service every step of the way.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="bg-nigerian-green hover:bg-nigerian-green/90">
+            <Button asChild size="lg" className="bg-white text-nigerian-green hover:bg-gray-100">
               <Link to="/cars">
                 Browse Our Inventory
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </Button>
             
-            <Button asChild variant="outline" size="lg">
+            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-nigerian-green">
               <Link to="/contact">
                 Contact Us Today
               </Link>
             </Button>
           </div>
 
-          <div className="mt-8 pt-8 border-t border-gray-200">
-            <p className="text-gray-600">
+          <div className="mt-8 pt-8 border-t border-white/20">
+            <p className="opacity-90">
               <span className="font-semibold">Visit our showroom:</span> Prince Samuel Adedoyin St, Lekki Peninsula II, Lagos
             </p>
-            <p className="text-gray-600 mt-1">
+            <p className="opacity-90 mt-1">
               <span className="font-semibold">Call us:</span> 0803 496 9367 | 08147319668 | 0708 040 1188
             </p>
           </div>
