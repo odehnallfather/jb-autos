@@ -74,15 +74,15 @@ const Header = () => {
               </NavigationMenuList>
             </NavigationMenu>
 
-            <a href="#services" className="text-gray-700 hover:text-nigerian-green transition-colors">
+            <Link to="/services" className="text-gray-700 hover:text-nigerian-green transition-colors">
               Services
-            </a>
+            </Link>
             <Link to="/about" className="text-gray-700 hover:text-nigerian-green transition-colors">
               About
             </Link>
-            <a href="#contact" className="text-gray-700 hover:text-nigerian-green transition-colors">
+            <Link to="/contact" className="text-gray-700 hover:text-nigerian-green transition-colors">
               Contact
-            </a>
+            </Link>
           </nav>
 
           {/* Desktop Auth Button */}
@@ -148,13 +148,13 @@ const Header = () => {
                 </div>
               </div>
 
-              <a 
-                href="#services" 
+              <Link 
+                to="/services" 
                 className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Services
-              </a>
+              </Link>
               <Link 
                 to="/about" 
                 className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
@@ -162,13 +162,13 @@ const Header = () => {
               >
                 About
               </Link>
-              <a 
-                href="#contact" 
+              <Link 
+                to="/contact" 
                 className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Contact
-              </a>
+              </Link>
               <div className="px-4 py-2">
                 <AuthButton />
               </div>
