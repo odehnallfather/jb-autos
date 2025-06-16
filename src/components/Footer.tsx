@@ -1,4 +1,3 @@
-
 import { Car, MessageCircle, Phone, Globe, Mail, MapPin, Clock } from 'lucide-react';
 
 const Footer = () => {
@@ -15,8 +14,7 @@ const Footer = () => {
               <span className="text-2xl font-bold">JB AUTOS</span>
             </div>
             <div className="space-y-2">
-              <p className="text-lg font-semibold text-nigerian-green">JEFFWORLDWIDE</p>
-              <p className="text-sm text-gray-400">RC: 1555217</p>
+              <p className="text-lg font-semibold text-nigerian-green">JB AUTOS Machines</p>
               <p className="text-gray-400">
                 Dealer in all kinds of cars - Brand New, Toks, and Grade A Nigerian used vehicles. 
                 Your trusted car dealer in Lagos, Nigeria.
@@ -31,19 +29,17 @@ const Footer = () => {
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-nigerian-green mt-1 flex-shrink-0" />
                 <span className="text-gray-400">
-                  Prince Samuel Adedoyin St,<br />
-                  Lekki Peninsula II,<br />
-                  Lagos 106104, Lagos
+                  Ikate, Lekki-Epe Expressway,<br />
+                  Lagos, Nigeria
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-nigerian-green" />
-                <span className="text-gray-400">0803 496 9367</span>
+                <span className="text-gray-400">08147319668</span>
               </div>
               <div className="space-y-1">
-                <div className="text-sm font-medium text-nigerian-green">Hotlines:</div>
+                <div className="text-sm font-medium text-nigerian-green">Additional Lines:</div>
                 <div className="text-gray-400 text-sm">
-                  <div>08147319668</div>
                   <div>0708 040 1188</div>
                 </div>
               </div>
@@ -72,10 +68,9 @@ const Footer = () => {
                 <span className="font-medium">Operating Hours:</span>
               </div>
               <div className="ml-6 space-y-1">
-                <div>Monday - Thursday: 8 AM - 7 PM</div>
-                <div>Friday: 7 AM - 7 PM</div>
-                <div>Saturday: 7 AM - 6 PM</div>
-                <div className="text-red-400">Sunday: Closed</div>
+                <div>Monday - Saturday: 8 AM - 6 PM</div>
+                <div>Sunday: 10 AM - 4 PM</div>
+                <div>Public Holidays: Closed</div>
               </div>
             </div>
             
@@ -96,7 +91,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-gray-400 text-sm">
-              © 2024 JEFFWORLDWIDE JB AUTOS. All rights reserved. RC: 1555217
+              © 2024 JB AUTOS Machines. All rights reserved.
             </div>
             
             <div className="flex items-center gap-6">

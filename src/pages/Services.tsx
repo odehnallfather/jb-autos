@@ -1,4 +1,3 @@
-
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -174,7 +173,7 @@ const Services = () => {
             Comprehensive automotive services from Nigeria's trusted car dealership
           </p>
           <div className="text-lg">
-            <span className="font-semibold">JEFFWORLDWIDE JB AUTOS</span> - Your complete automotive solution
+            <span className="font-semibold">JB AUTOS</span> - Your complete automotive solution
           </div>
         </div>
       </section>
@@ -302,10 +301,10 @@ const Services = () => {
 
           <div className="mt-8 pt-8 border-t border-white/20">
             <p className="opacity-90">
-              <span className="font-semibold">Visit our showroom:</span> Prince Samuel Adedoyin St, Lekki Peninsula II, Lagos
+              <span className="font-semibold">Visit our showroom:</span> Ikate, Lekki-Epe Expressway, Lagos
             </p>
             <p className="opacity-90 mt-1">
-              <span className="font-semibold">Call us:</span> 0803 496 9367 | 08147319668 | 0708 040 1188
+              <span className="font-semibold">Call us:</span> 08147319668 | 0708 040 1188
             </p>
           </div>
         </div>

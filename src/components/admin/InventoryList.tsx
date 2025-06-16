@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -7,6 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Pencil, Trash2, Plus, Search } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import type { Tables, Enums } from '@/integrations/supabase/types';
@@ -17,6 +19,22 @@ type CarStatus = Enums<'car_status'>;
 const InventoryList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | CarStatus>('all');
+  const [showAddDialog, setShowAddDialog] = useState(false);
+  const [editingCar, setEditingCar] = useState<Car | null>(null);
+  const [formData, setFormData] = useState({
+    make: '',
+    model: '',
+    year: new Date().getFullYear(),
+    price: '',
+    mileage: '',
+    fuel_type: '',
+    transmission: '',
+    color: '',
+    description: '',
+    features: '',
+    status: 'available' as CarStatus
+  });
+
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -39,6 +57,51 @@ const InventoryList = () => {
     },
   });
 
+  const addCarMutation = useMutation({
+    mutationFn: async (carData: any) => {
+      const { error } = await supabase.from('cars').insert([{
+        ...carData,
+        features: carData.features ? carData.features.split(',').map((f: string) => f.trim()) : [],
+        price: parseFloat(carData.price),
+        mileage: carData.mileage ? parseInt(carData.mileage) : null,
+        year: parseInt(carData.year)
+      }]);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cars'] });
+      setShowAddDialog(false);
+      resetForm();
+      toast({ title: 'Car added successfully' });
+    },
+    onError: (error) => {
+      toast({ title: 'Failed to add car', description: error.message, variant: 'destructive' });
+    },
+  });
+
+  const updateCarMutation = useMutation({
+    mutationFn: async ({ id, carData }: { id: string; carData: any }) => {
+      const { error } = await supabase.from('cars').update({
+        ...carData,
+        features: carData.features ? carData.features.split(',').map((f: string) => f.trim()) : [],
+        price: parseFloat(carData.price),
+        mileage: carData.mileage ? parseInt(carData.mileage) : null,
+        year: parseInt(carData.year),
+        updated_at: new Date().toISOString()
+      }).eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cars'] });
+      setEditingCar(null);
+      resetForm();
+      toast({ title: 'Car updated successfully' });
+    },
+    onError: (error) => {
+      toast({ title: 'Failed to update car', description: error.message, variant: 'destructive' });
+    },
+  });
+
   const deleteMutation = useMutation({
     mutationFn: async (carId: string) => {
       const { error } = await supabase.from('cars').delete().eq('id', carId);
@@ -52,6 +115,49 @@ const InventoryList = () => {
       toast({ title: 'Failed to delete car', description: error.message, variant: 'destructive' });
     },
   });
+
+  const resetForm = () => {
+    setFormData({
+      make: '',
+      model: '',
+      year: new Date().getFullYear(),
+      price: '',
+      mileage: '',
+      fuel_type: '',
+      transmission: '',
+      color: '',
+      description: '',
+      features: '',
+      status: 'available'
+    });
+  };
+
+  const handleEdit = (car: Car) => {
+    setEditingCar(car);
+    setFormData({
+      make: car.make,
+      model: car.model,
+      year: car.year,
+      price: car.price.toString(),
+      mileage: car.mileage?.toString() || '',
+      fuel_type: car.fuel_type || '',
+      transmission: car.transmission || '',
+      color: car.color || '',
+      description: car.description || '',
+      features: car.features?.join(', ') || '',
+      status: car.status || 'available'
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (editingCar) {
+      updateCarMutation.mutate({ id: editingCar.id, carData: formData });
+    } else {
+      addCarMutation.mutate(formData);
+    }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -78,10 +184,157 @@ const InventoryList = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Inventory Management</h2>
-        <Button>
-          <Plus className="w-4 h-4 mr-2" />
-          Add New Car
-        </Button>
+        <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
+          <DialogTrigger asChild>
+            <Button onClick={resetForm}>
+              <Plus className="w-4 h-4 mr-2" />
+              Add New Car
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Add New Car</DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="make">Make *</Label>
+                  <Input
+                    id="make"
+                    value={formData.make}
+                    onChange={(e) => setFormData(prev => ({ ...prev, make: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="model">Model *</Label>
+                  <Input
+                    id="model"
+                    value={formData.model}
+                    onChange={(e) => setFormData(prev => ({ ...prev, model: e.target.value }))}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <Label htmlFor="year">Year *</Label>
+                  <Input
+                    id="year"
+                    type="number"
+                    value={formData.year}
+                    onChange={(e) => setFormData(prev => ({ ...prev, year: parseInt(e.target.value) }))}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="price">Price (₦) *</Label>
+                  <Input
+                    id="price"
+                    type="number"
+                    value={formData.price}
+                    onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="mileage">Mileage (km)</Label>
+                  <Input
+                    id="mileage"
+                    type="number"
+                    value={formData.mileage}
+                    onChange={(e) => setFormData(prev => ({ ...prev, mileage: e.target.value }))}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="fuel_type">Fuel Type</Label>
+                  <Select onValueChange={(value) => setFormData(prev => ({ ...prev, fuel_type: value }))}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select fuel type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Petrol">Petrol</SelectItem>
+                      <SelectItem value="Diesel">Diesel</SelectItem>
+                      <SelectItem value="Hybrid">Hybrid</SelectItem>
+                      <SelectItem value="Electric">Electric</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="transmission">Transmission</Label>
+                  <Select onValueChange={(value) => setFormData(prev => ({ ...prev, transmission: value }))}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select transmission" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Manual">Manual</SelectItem>
+                      <SelectItem value="Automatic">Automatic</SelectItem>
+                      <SelectItem value="CVT">CVT</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="color">Color</Label>
+                  <Input
+                    id="color"
+                    value={formData.color}
+                    onChange={(e) => setFormData(prev => ({ ...prev, color: e.target.value }))}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="status">Status</Label>
+                  <Select value={formData.status} onValueChange={(value: CarStatus) => setFormData(prev => ({ ...prev, status: value }))}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="available">Available</SelectItem>
+                      <SelectItem value="sold">Sold</SelectItem>
+                      <SelectItem value="reserved">Reserved</SelectItem>
+                      <SelectItem value="maintenance">Maintenance</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="features">Features (comma-separated)</Label>
+                <Input
+                  id="features"
+                  value={formData.features}
+                  onChange={(e) => setFormData(prev => ({ ...prev, features: e.target.value }))}
+                  placeholder="AC, Leather Seats, Navigation, etc."
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  value={formData.description}
+                  onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                  rows={3}
+                />
+              </div>
+
+              <div className="flex gap-2 pt-4">
+                <Button type="submit" disabled={addCarMutation.isPending}>
+                  {addCarMutation.isPending ? 'Adding...' : 'Add Car'}
+                </Button>
+                <Button type="button" variant="outline" onClick={() => setShowAddDialog(false)}>
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="flex space-x-4">
@@ -146,7 +399,7 @@ const InventoryList = () => {
               )}
 
               <div className="flex space-x-2 pt-2">
-                <Button variant="outline" size="sm" className="flex-1">
+                <Button variant="outline" size="sm" className="flex-1" onClick={() => handleEdit(car)}>
                   <Pencil className="w-4 h-4 mr-1" />
                   Edit
                 </Button>
@@ -163,6 +416,154 @@ const InventoryList = () => {
           </Card>
         ))}
       </div>
+
+      {/* Edit Dialog */}
+      <Dialog open={!!editingCar} onOpenChange={() => setEditingCar(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Edit Car</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Same form fields as add dialog */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="edit-make">Make *</Label>
+                <Input
+                  id="edit-make"
+                  value={formData.make}
+                  onChange={(e) => setFormData(prev => ({ ...prev, make: e.target.value }))}
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-model">Model *</Label>
+                <Input
+                  id="edit-model"
+                  value={formData.model}
+                  onChange={(e) => setFormData(prev => ({ ...prev, model: e.target.value }))}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <Label htmlFor="edit-year">Year *</Label>
+                <Input
+                  id="edit-year"
+                  type="number"
+                  value={formData.year}
+                  onChange={(e) => setFormData(prev => ({ ...prev, year: parseInt(e.target.value) }))}
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-price">Price (₦) *</Label>
+                <Input
+                  id="edit-price"
+                  type="number"
+                  value={formData.price}
+                  onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-mileage">Mileage (km)</Label>
+                <Input
+                  id="edit-mileage"
+                  type="number"
+                  value={formData.mileage}
+                  onChange={(e) => setFormData(prev => ({ ...prev, mileage: e.target.value }))}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="edit-fuel_type">Fuel Type</Label>
+                <Select value={formData.fuel_type} onValueChange={(value) => setFormData(prev => ({ ...prev, fuel_type: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select fuel type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Petrol">Petrol</SelectItem>
+                    <SelectItem value="Diesel">Diesel</SelectItem>
+                    <SelectItem value="Hybrid">Hybrid</SelectItem>
+                    <SelectItem value="Electric">Electric</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="edit-transmission">Transmission</Label>
+                <Select value={formData.transmission} onValueChange={(value) => setFormData(prev => ({ ...prev, transmission: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select transmission" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Manual">Manual</SelectItem>
+                    <SelectItem value="Automatic">Automatic</SelectItem>
+                    <SelectItem value="CVT">CVT</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="edit-color">Color</Label>
+                <Input
+                  id="edit-color"
+                  value={formData.color}
+                  onChange={(e) => setFormData(prev => ({ ...prev, color: e.target.value }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-status">Status</Label>
+                <Select value={formData.status} onValueChange={(value: CarStatus) => setFormData(prev => ({ ...prev, status: value }))}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="available">Available</SelectItem>
+                    <SelectItem value="sold">Sold</SelectItem>
+                    <SelectItem value="reserved">Reserved</SelectItem>
+                    <SelectItem value="maintenance">Maintenance</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="edit-features">Features (comma-separated)</Label>
+              <Input
+                id="edit-features"
+                value={formData.features}
+                onChange={(e) => setFormData(prev => ({ ...prev, features: e.target.value }))}
+                placeholder="AC, Leather Seats, Navigation, etc."
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="edit-description">Description</Label>
+              <Textarea
+                id="edit-description"
+                value={formData.description}
+                onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                rows={3}
+              />
+            </div>
+
+            <div className="flex gap-2 pt-4">
+              <Button type="submit" disabled={updateCarMutation.isPending}>
+                {updateCarMutation.isPending ? 'Updating...' : 'Update Car'}
+              </Button>
+              <Button type="button" variant="outline" onClick={() => setEditingCar(null)}>
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       {cars?.length === 0 && (
         <div className="text-center py-12">

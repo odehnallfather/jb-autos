@@ -1,15 +1,14 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { MessageCircle, Phone, Car, Shield, Zap, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import ElevenLabsWidget from './ElevenLabsWidget';
-import LiveChatWidget from './LiveChatWidget';
+import VirtualAssistantWidget from './VirtualAssistantWidget';
+import DirectMessaging from './DirectMessaging';
 
 const HeroSection = () => {
-  const [showVoiceWidget, setShowVoiceWidget] = useState(false);
-  const [showLiveChat, setShowLiveChat] = useState(false);
+  const [showVirtualAssistant, setShowVirtualAssistant] = useState(false);
+  const [showDirectMessaging, setShowDirectMessaging] = useState(false);
 
   return (
     <>
@@ -30,7 +29,7 @@ const HeroSection = () => {
                 </h1>
                 
                 <p className="text-xl text-gray-600 leading-relaxed">
-                  Welcome to JB AUTOS, your trusted car dealer in Lagos! We offer quality 
+                  Welcome to JB AUTOS Machines, your trusted car dealer in Lagos! We offer quality 
                   pre-owned and new vehicles with guaranteed authenticity, flexible payment 
                   options, and exceptional after-sales service.
                 </p>
@@ -65,13 +64,13 @@ const HeroSection = () => {
                 </Link>
                 
                 <Button 
-                  onClick={() => setShowVoiceWidget(true)}
+                  onClick={() => setShowVirtualAssistant(true)}
                   size="lg" 
                   variant="outline" 
                   className="border-nigerian-green text-nigerian-green hover:bg-nigerian-green hover:text-white px-8 py-6 text-lg"
                 >
                   <Phone className="w-5 h-5 mr-2" />
-                  Call Us Now
+                  AI Assistant
                 </Button>
               </div>
 
@@ -135,18 +134,18 @@ const HeroSection = () => {
                     {/* Features Preview */}
                     <div className="grid grid-cols-2 gap-4 pt-4 border-t">
                       <button
-                        onClick={() => setShowLiveChat(true)}
+                        onClick={() => setShowDirectMessaging(true)}
                         className="text-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                       >
                         <MessageCircle className="w-6 h-6 text-nigerian-green mx-auto mb-2" />
                         <div className="text-xs font-medium">Live Chat</div>
                       </button>
                       <button
-                        onClick={() => setShowVoiceWidget(true)}
+                        onClick={() => setShowVirtualAssistant(true)}
                         className="text-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                       >
                         <Phone className="w-6 h-6 text-nigerian-green mx-auto mb-2" />
-                        <div className="text-xs font-medium">Call Support</div>
+                        <div className="text-xs font-medium">AI Assistant</div>
                       </button>
                     </div>
                   </div>
@@ -167,13 +166,14 @@ const HeroSection = () => {
       </section>
 
       {/* Widgets */}
-      <ElevenLabsWidget 
-        isOpen={showVoiceWidget} 
-        onClose={() => setShowVoiceWidget(false)} 
+      <VirtualAssistantWidget 
+        isOpen={showVirtualAssistant} 
+        onClose={() => setShowVirtualAssistant(false)}
+        n8nWebhookUrl="YOUR_N8N_WEBHOOK_URL" // Replace with your actual n8n webhook URL
       />
-      <LiveChatWidget 
-        isOpen={showLiveChat} 
-        onClose={() => setShowLiveChat(false)} 
+      <DirectMessaging 
+        isOpen={showDirectMessaging} 
+        onClose={() => setShowDirectMessaging(false)} 
       />
     </>
   );
