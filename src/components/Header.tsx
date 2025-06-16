@@ -1,182 +1,159 @@
 
-import { useState } from 'react';
-import { Car, Menu, X } from 'lucide-react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from '@/components/ui/navigation-menu';
-import { Link } from 'react-router-dom';
-import AuthButton from '@/components/AuthButton';
+import { Menu, X, Car, Phone, MessageCircle, User } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import AuthButton from './AuthButton';
+import ElevenLabsWidget from './ElevenLabsWidget';
+import LiveChatWidget from './LiveChatWidget';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCallWidgetOpen, setIsCallWidgetOpen] = useState(false);
+  const [isChatWidgetOpen, setIsChatWidgetOpen] = useState(false);
+  const location = useLocation();
+
+  const navigation = [
+    { name: 'Home', href: '/' },
+    { name: 'Cars', href: '/cars' },
+    { name: 'About', href: '/about' },
+    { name: 'Services', href: '/services' },
+    { name: 'Contact', href: '/contact' },
+  ];
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="bg-white shadow-lg sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-gradient-nigerian rounded-lg flex items-center justify-center">
-              <Car className="w-6 h-6 text-white" />
+    <>
+      <header className="bg-white shadow-sm sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-yellow-500 rounded-lg flex items-center justify-center">
+                <Car className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-bold text-gray-900">JB AUTOS Machines</span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-8">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive(item.href)
+                      ? 'text-green-600 border-b-2 border-green-600'
+                      : 'text-gray-700 hover:text-green-600'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Desktop Actions */}
+            <div className="hidden md:flex items-center space-x-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsCallWidgetOpen(true)}
+                className="flex items-center space-x-1"
+              >
+                <Phone className="w-4 h-4" />
+                <span>Call Support</span>
+              </Button>
+              
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsChatWidgetOpen(true)}
+                className="flex items-center space-x-1"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>Live Chat</span>
+              </Button>
+
+              <AuthButton />
             </div>
-            <span className="text-2xl font-bold bg-gradient-nigerian bg-clip-text text-transparent">
-              JB AUTOS
-            </span>
-          </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-700 hover:text-nigerian-green transition-colors">
-              Home
-            </Link>
-            
-            {/* Available Cars Dropdown */}
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-gray-700 hover:text-nigerian-green transition-colors bg-transparent hover:bg-transparent data-[state=open]:bg-transparent">
-                    Available Cars
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent className="bg-white border shadow-lg rounded-md p-2 min-w-[200px]">
-                    <div className="space-y-2">
-                      <Link 
-                        to="/cars?category=brand-new" 
-                        className="block px-4 py-2 text-gray-700 hover:text-nigerian-green hover:bg-gray-50 rounded transition-colors"
-                      >
-                        Brand New
-                      </Link>
-                      <Link 
-                        to="/cars?category=toks" 
-                        className="block px-4 py-2 text-gray-700 hover:text-nigerian-green hover:bg-gray-50 rounded transition-colors"
-                      >
-                        Toks
-                      </Link>
-                      <Link 
-                        to="/cars?category=grade-a" 
-                        className="block px-4 py-2 text-gray-700 hover:text-nigerian-green hover:bg-gray-50 rounded transition-colors"
-                      >
-                        Grade-A
-                      </Link>
-                      <Link 
-                        to="/cars" 
-                        className="block px-4 py-2 text-gray-700 hover:text-nigerian-green hover:bg-gray-50 rounded transition-colors border-t"
-                      >
-                        View All Cars
-                      </Link>
-                    </div>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-
-            <Link to="/services" className="text-gray-700 hover:text-nigerian-green transition-colors">
-              Services
-            </Link>
-            <Link to="/about" className="text-gray-700 hover:text-nigerian-green transition-colors">
-              About
-            </Link>
-            <Link to="/contact" className="text-gray-700 hover:text-nigerian-green transition-colors">
-              Contact
-            </Link>
-          </nav>
-
-          {/* Desktop Auth Button */}
-          <div className="hidden md:block">
-            <AuthButton />
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
-
-          {/* Mobile menu button */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </Button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
-            <nav className="flex flex-col space-y-4">
-              <Link 
-                to="/" 
-                className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </Link>
+          <div className="md:hidden border-t border-gray-200 bg-white">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`block px-3 py-2 text-base font-medium rounded-md transition-colors ${
+                    isActive(item.href)
+                      ? 'text-green-600 bg-green-50'
+                      : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
               
-              {/* Mobile Available Cars Section */}
-              <div className="px-4 py-2">
-                <div className="text-gray-700 font-medium mb-2">Available Cars</div>
-                <div className="ml-4 space-y-2">
-                  <Link 
-                    to="/cars?category=brand-new" 
-                    className="block text-gray-600 hover:text-nigerian-green transition-colors py-1"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Brand New
-                  </Link>
-                  <Link 
-                    to="/cars?category=toks" 
-                    className="block text-gray-600 hover:text-nigerian-green transition-colors py-1"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Toks
-                  </Link>
-                  <Link 
-                    to="/cars?category=grade-a" 
-                    className="block text-gray-600 hover:text-nigerian-green transition-colors py-1"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Grade-A
-                  </Link>
-                  <Link 
-                    to="/cars" 
-                    className="block text-gray-600 hover:text-nigerian-green transition-colors py-1"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    View All Cars
-                  </Link>
+              <div className="pt-4 pb-2 border-t border-gray-200 space-y-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setIsCallWidgetOpen(true);
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full justify-start"
+                >
+                  <Phone className="w-4 h-4 mr-2" />
+                  Call Support
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setIsChatWidgetOpen(true);
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full justify-start"
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Live Chat
+                </Button>
+                
+                <div className="pt-2">
+                  <AuthButton />
                 </div>
               </div>
-
-              <Link 
-                to="/services" 
-                className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Services
-              </Link>
-              <Link 
-                to="/about" 
-                className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About
-              </Link>
-              <Link 
-                to="/contact" 
-                className="text-gray-700 hover:text-nigerian-green transition-colors px-4 py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </Link>
-              <div className="px-4 py-2">
-                <AuthButton />
-              </div>
-            </nav>
+            </div>
           </div>
         )}
-      </div>
-    </header>
+      </header>
+
+      {/* Widgets */}
+      <ElevenLabsWidget
+        isOpen={isCallWidgetOpen}
+        onClose={() => setIsCallWidgetOpen(false)}
+      />
+      
+      <LiveChatWidget
+        isOpen={isChatWidgetOpen}
+        onClose={() => setIsChatWidgetOpen(false)}
+      />
+    </>
   );
 };
 

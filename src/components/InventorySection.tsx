@@ -1,186 +1,313 @@
 
-import { Card, CardContent } from '@/components/ui/card';
+import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MessageCircle, Phone, Car, MapPin, Calendar, Fuel } from 'lucide-react';
+import { ArrowRight, Car, Eye, Phone, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import type { Tables } from '@/integrations/supabase/types';
+import ElevenLabsWidget from './ElevenLabsWidget';
+import LiveChatWidget from './LiveChatWidget';
+
+type Car = Tables<'cars'>;
 
 const InventorySection = () => {
-  const sampleCars = [
-    {
-      id: 1,
-      make: "Toyota",
-      model: "Camry",
-      year: 2020,
-      price: "₦7,500,000",
-      mileage: "45,000 km",
-      fuel: "Petrol",
-      image: "/placeholder.svg",
-      status: "Available",
-      features: ["AC", "Leather Seats", "Navigation"]
-    },
-    {
-      id: 2,
-      make: "Honda",
-      model: "Accord",
-      year: 2019,
-      price: "₦6,200,000",
-      mileage: "38,000 km",
-      fuel: "Petrol",
-      image: "/placeholder.svg",
-      status: "Available",
-      features: ["Sunroof", "Backup Camera", "Bluetooth"]
-    },
-    {
-      id: 3,
-      make: "Lexus",
-      model: "ES 350",
-      year: 2021,
-      price: "₦15,800,000",
-      mileage: "22,000 km",
-      fuel: "Petrol",
-      image: "/placeholder.svg",
-      status: "Reserved",
-      features: ["Premium Sound", "Memory Seats", "HUD"]
-    }
-  ];
+  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
+  const [isCallWidgetOpen, setIsCallWidgetOpen] = useState(false);
+  const [isChatWidgetOpen, setIsChatWidgetOpen] = useState(false);
 
-  return (
-    <section id="inventory" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center px-3 py-1 rounded-full bg-nigerian-green/10 text-nigerian-green text-sm font-medium mb-4">
-            🚗 Our Current Inventory
+  const { data: cars, isLoading } = useQuery({
+    queryKey: ['featured-cars'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('cars')
+        .select('*')
+        .eq('status', 'available')
+        .order('created_at', { ascending: false })
+        .limit(6);
+      
+      if (error) throw error;
+      return data as Car[];
+    },
+  });
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
+  const handleCarClick = (car: Car) => {
+    setSelectedCar(car);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedCar(null);
+  };
+
+  const handleCallForCar = (car: Car) => {
+    setSelectedCar(car);
+    setIsCallWidgetOpen(true);
+  };
+
+  const handleChatForCar = (car: Car) => {
+    setSelectedCar(car);
+    setIsChatWidgetOpen(true);
+  };
+
+  if (isLoading) {
+    return (
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Featured Inventory
+            </h2>
+            <p className="text-lg text-gray-600">Loading our latest vehicles...</p>
           </div>
-          
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Quality Vehicles from{' '}
-            <span className="gradient-text">JB AUTOS</span>
-          </h2>
-          
-          <p className="text-xl text-gray-600">
-            Browse our carefully selected inventory of quality vehicles. Each car is inspected, 
-            verified, and comes with detailed history reports for your peace of mind.
-          </p>
-        </div>
-
-        {/* Inventory Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {sampleCars.map((car) => (
-            <Card key={car.id} className="card-hover border-0 shadow-lg overflow-hidden">
-              {/* Car Image */}
-              <div className="relative">
-                <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                  <Car className="w-16 h-16 text-gray-400" />
-                </div>
-                <Badge className={`absolute top-3 left-3 ${car.status === 'Available' ? 'bg-nigerian-green' : 'bg-orange-500'} text-white`}>
-                  {car.status}
-                </Badge>
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1">
-                  <span className="text-sm font-bold text-nigerian-green">{car.price}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="bg-white rounded-lg shadow-lg animate-pulse">
+                <div className="h-48 bg-gray-300 rounded-t-lg"></div>
+                <div className="p-6 space-y-4">
+                  <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                  <div className="h-8 bg-gray-300 rounded"></div>
                 </div>
               </div>
-
-              <CardContent className="p-6">
-                {/* Car Details */}
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-xl font-bold">
-                      {car.year} {car.make} {car.model}
-                    </h3>
-                    <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
-                      <MapPin className="w-4 h-4" />
-                      <span>JB AUTOS Showroom</span>
-                    </div>
-                  </div>
-
-                  {/* Key Stats */}
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-gray-400" />
-                      <span>{car.mileage}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Fuel className="w-4 h-4 text-gray-400" />
-                      <span>{car.fuel}</span>
-                    </div>
-                  </div>
-
-                  {/* Features */}
-                  <div className="flex flex-wrap gap-2">
-                    {car.features.map((feature, idx) => (
-                      <Badge key={idx} variant="secondary" className="text-xs">
-                        {feature}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="grid grid-cols-2 gap-3 pt-4">
-                    <Button variant="outline" size="sm" className="flex items-center gap-1">
-                      <MessageCircle className="w-4 h-4" />
-                      Inquire
-                    </Button>
-                    <Button size="sm" className="bg-gradient-nigerian hover:opacity-90 flex items-center gap-1">
-                      <Phone className="w-4 h-4" />
-                      Call
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
+      </section>
+    );
+  }
 
-        {/* CTA Section */}
-        <div className="text-center space-y-6">
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold">
-              Looking for Something Specific?
-            </h3>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Browse our full inventory of quality vehicles or contact us to help you 
-              find the perfect car for your needs and budget.
+  return (
+    <>
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Featured Inventory
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Discover our handpicked selection of premium vehicles. Every car is thoroughly inspected and comes with our quality guarantee.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/cars">
-              <Button size="lg" className="bg-gradient-nigerian hover:opacity-90 px-8">
-                <Car className="w-5 h-5 mr-2" />
-                Browse All Cars
-              </Button>
-            </Link>
-            <Link to="/about">
-              <Button size="lg" variant="outline" className="border-nigerian-green text-nigerian-green hover:bg-nigerian-green hover:text-white px-8">
-                Visit Our Showroom
-              </Button>
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {cars?.map((car) => (
+              <Card key={car.id} className="hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                <div onClick={() => handleCarClick(car)}>
+                  <div className="relative overflow-hidden rounded-t-lg">
+                    <img
+                      src={car.images?.[0] || "/placeholder.svg"}
+                      alt={`${car.make} ${car.model}`}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-4 right-4">
+                      <Badge variant="secondary" className="bg-white/90 text-green-700">
+                        {car.status}
+                      </Badge>
+                    </div>
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                      <Eye className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                  </div>
+                </div>
+
+                <CardHeader>
+                  <CardTitle className="text-lg font-bold">
+                    {car.year} {car.make} {car.model}
+                  </CardTitle>
+                  <p className="text-2xl font-bold text-green-600">
+                    {formatPrice(car.price)}
+                  </p>
+                </CardHeader>
+
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 mb-4">
+                    <div>
+                      <span className="font-medium">Mileage:</span> {car.mileage?.toLocaleString() || 'N/A'} km
+                    </div>
+                    <div>
+                      <span className="font-medium">Fuel:</span> {car.fuel_type || 'N/A'}
+                    </div>
+                    <div>
+                      <span className="font-medium">Color:</span> {car.color || 'N/A'}
+                    </div>
+                    <div>
+                      <span className="font-medium">Transmission:</span> {car.transmission || 'N/A'}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <Button 
+                      onClick={() => handleChatForCar(car)}
+                      size="sm" 
+                      className="flex-1 bg-green-600 hover:bg-green-700"
+                    >
+                      <MessageCircle className="w-4 h-4 mr-1" />
+                      Inquire
+                    </Button>
+                    <Button 
+                      onClick={() => handleCallForCar(car)}
+                      variant="outline" 
+                      size="sm"
+                      className="flex-1"
+                    >
+                      <Phone className="w-4 h-4 mr-1" />
+                      Call
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t max-w-2xl mx-auto">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-nigerian-green">50+</div>
-              <div className="text-sm text-gray-600">Cars in Stock</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-nigerian-green">100%</div>
-              <div className="text-sm text-gray-600">Verified Quality</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-nigerian-green">5⭐</div>
-              <div className="text-sm text-gray-600">Customer Rating</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-nigerian-green">24/7</div>
-              <div className="text-sm text-gray-600">Support</div>
+          <div className="text-center">
+            <Button asChild size="lg" className="bg-green-600 hover:bg-green-700">
+              <Link to="/cars" className="flex items-center space-x-2">
+                <span>View All Cars</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Car Details Modal */}
+      {selectedCar && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    {selectedCar.year} {selectedCar.make} {selectedCar.model}
+                  </h2>
+                  <p className="text-3xl font-bold text-green-600 mt-2">
+                    {formatPrice(selectedCar.price)}
+                  </p>
+                </div>
+                <Button variant="outline" onClick={handleCloseDetails}>
+                  ×
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                  <img
+                    src={selectedCar.images?.[0] || "/placeholder.svg"}
+                    alt={`${selectedCar.make} ${selectedCar.model}`}
+                    className="w-full h-64 object-cover rounded-lg"
+                  />
+                  {selectedCar.images && selectedCar.images.length > 1 && (
+                    <div className="grid grid-cols-3 gap-2 mt-4">
+                      {selectedCar.images.slice(1, 4).map((image, index) => (
+                        <img
+                          key={index}
+                          src={image}
+                          alt={`${selectedCar.make} ${selectedCar.model} ${index + 2}`}
+                          className="w-full h-20 object-cover rounded"
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Vehicle Details</h3>
+                    <div className="grid grid-cols-1 gap-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Year:</span>
+                        <span className="font-medium">{selectedCar.year}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Mileage:</span>
+                        <span className="font-medium">{selectedCar.mileage?.toLocaleString() || 'N/A'} km</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Fuel Type:</span>
+                        <span className="font-medium">{selectedCar.fuel_type || 'N/A'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Transmission:</span>
+                        <span className="font-medium">{selectedCar.transmission || 'N/A'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Color:</span>
+                        <span className="font-medium">{selectedCar.color || 'N/A'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Status:</span>
+                        <Badge variant="secondary" className="bg-green-100 text-green-700">
+                          {selectedCar.status}
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
+
+                  {selectedCar.description && (
+                    <div>
+                      <h3 className="text-lg font-semibold mb-3">Description</h3>
+                      <p className="text-gray-600">{selectedCar.description}</p>
+                    </div>
+                  )}
+
+                  {selectedCar.features && selectedCar.features.length > 0 && (
+                    <div>
+                      <h3 className="text-lg font-semibold mb-3">Features</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedCar.features.map((feature, index) => (
+                          <Badge key={index} variant="outline">
+                            {feature}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex gap-3 pt-4">
+                    <Button 
+                      onClick={() => handleChatForCar(selectedCar)}
+                      className="flex-1 bg-green-600 hover:bg-green-700"
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Start Chat
+                    </Button>
+                    <Button 
+                      onClick={() => handleCallForCar(selectedCar)}
+                      variant="outline"
+                      className="flex-1"
+                    >
+                      <Phone className="w-4 h-4 mr-2" />
+                      Call Now
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      )}
+
+      <ElevenLabsWidget
+        isOpen={isCallWidgetOpen}
+        onClose={() => setIsCallWidgetOpen(false)}
+      />
+      
+      <LiveChatWidget
+        isOpen={isChatWidgetOpen}
+        onClose={() => setIsChatWidgetOpen(false)}
+        selectedCar={selectedCar}
+      />
+    </>
   );
 };
 
