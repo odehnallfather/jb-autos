@@ -1,3 +1,4 @@
+
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -87,15 +88,17 @@ const Contact = () => {
       icon: Phone,
       title: "Phone Numbers",
       details: [
-        "+234 806 789 0123"
+        "0803 496 9367",
+        "08147319668", 
+        "0708 040 1188"
       ]
     },
     {
       icon: MapPin,
       title: "Showroom Address",
       details: [
-        "Ikate, Lekki-Epe Expressway",
-        "Lekki Phase 1, Lagos",
+        "Prince Samuel Adedoyin St",
+        "Lekki Peninsula II, Lagos",
         "Nigeria"
       ]
     },
@@ -103,16 +106,16 @@ const Contact = () => {
       icon: Clock,
       title: "Business Hours",
       details: [
-        "Monday - Friday: 8:00 AM - 7:00 PM",
-        "Saturday: 8:00 AM - 6:00 PM",
-        "Sunday: Closed"
+        "Monday - Saturday: 8:00 AM - 6:00 PM",
+        "Sunday: 10:00 AM - 4:00 PM",
+        "Public Holidays: Closed"
       ]
     },
     {
       icon: MessageCircle,
       title: "WhatsApp",
       details: [
-        "+234 806 789 0123",
+        "0803 496 9367",
         "Quick responses available",
         "Share photos & videos"
       ]
@@ -124,7 +127,7 @@ const Contact = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-600 to-yellow-500 text-white py-16">
+      <section className="bg-gradient-nigerian text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">
             Contact Us
@@ -133,7 +136,7 @@ const Contact = () => {
             Get in touch with Lagos's most trusted car dealership
           </p>
           <div className="text-lg">
-            <span className="font-semibold">JB AUTOS Machines</span> - We're here to help
+            <span className="font-semibold">JEFFWORLDWIDE JB AUTOS</span> - We're here to help
           </div>
         </div>
       </section>
@@ -255,8 +258,8 @@ const Contact = () => {
                 <Card key={index} className="border-0 shadow-md">
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-green-600/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <info.icon className="w-6 h-6 text-green-600" />
+                      <div className="w-12 h-12 bg-nigerian-green/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <info.icon className="w-6 h-6 text-nigerian-green" />
                       </div>
                       <div>
                         <h3 className="font-semibold text-lg mb-2">{info.title}</h3>
@@ -277,7 +280,7 @@ const Contact = () => {
                 className="w-full bg-green-600 hover:bg-green-700"
                 size="lg"
               >
-                <a href="https://wa.me/2348067890123" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/2348034969367" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Chat on WhatsApp
                 </a>
@@ -289,7 +292,7 @@ const Contact = () => {
                 className="w-full"
                 size="lg"
               >
-                <a href="tel:+2348067890123">
+                <a href="tel:+2348034969367">
                   <Phone className="w-4 h-4 mr-2" />
                   Call Now
                 </a>

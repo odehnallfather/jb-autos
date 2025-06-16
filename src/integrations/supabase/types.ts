@@ -74,78 +74,6 @@ export type Database = {
           },
         ]
       }
-      conversations: {
-        Row: {
-          created_at: string
-          customer_id: string
-          dealer_id: string | null
-          id: string
-          last_message_at: string | null
-          status: string | null
-          subject: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          customer_id: string
-          dealer_id?: string | null
-          id?: string
-          last_message_at?: string | null
-          status?: string | null
-          subject?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          customer_id?: string
-          dealer_id?: string | null
-          id?: string
-          last_message_at?: string | null
-          status?: string | null
-          subject?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      direct_messages: {
-        Row: {
-          conversation_id: string
-          created_at: string
-          id: string
-          is_read: boolean | null
-          media_url: string | null
-          message: string
-          message_type: string | null
-          recipient_id: string
-          sender_id: string
-          updated_at: string
-        }
-        Insert: {
-          conversation_id: string
-          created_at?: string
-          id?: string
-          is_read?: boolean | null
-          media_url?: string | null
-          message: string
-          message_type?: string | null
-          recipient_id: string
-          sender_id: string
-          updated_at?: string
-        }
-        Update: {
-          conversation_id?: string
-          created_at?: string
-          id?: string
-          is_read?: boolean | null
-          media_url?: string | null
-          message?: string
-          message_type?: string | null
-          recipient_id?: string
-          sender_id?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
       inquiries: {
         Row: {
           created_at: string | null
@@ -250,46 +178,12 @@ export type Database = {
           },
         ]
       }
-      notifications: {
-        Row: {
-          created_at: string
-          id: string
-          is_read: boolean | null
-          message: string
-          related_id: string | null
-          title: string
-          type: string | null
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          is_read?: boolean | null
-          message: string
-          related_id?: string | null
-          title: string
-          type?: string | null
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          is_read?: boolean | null
-          message?: string
-          related_id?: string | null
-          title?: string
-          type?: string | null
-          user_id?: string
-        }
-        Relationships: []
-      }
       profiles: {
         Row: {
           created_at: string | null
           email: string
           full_name: string | null
           id: string
-          notification_preferences: Json | null
           phone: string | null
           role: Database["public"]["Enums"]["user_role"] | null
           updated_at: string | null
@@ -299,7 +193,6 @@ export type Database = {
           email: string
           full_name?: string | null
           id: string
-          notification_preferences?: Json | null
           phone?: string | null
           role?: Database["public"]["Enums"]["user_role"] | null
           updated_at?: string | null
@@ -309,7 +202,6 @@ export type Database = {
           email?: string
           full_name?: string | null
           id?: string
-          notification_preferences?: Json | null
           phone?: string | null
           role?: Database["public"]["Enums"]["user_role"] | null
           updated_at?: string | null
