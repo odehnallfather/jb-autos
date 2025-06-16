@@ -61,7 +61,7 @@ const FeaturesSection = () => {
               Ready to Find Your Perfect Car?
             </h3>
             <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-              Visit our showroom in Ikate, Lekki to see our full inventory and take a test drive. 
+              Visit our showroom at Ikate, Lekki-Epe Expressway to see our full inventory and take a test drive. 
               Our expert team is ready to help you find exactly what you're looking for.
             </p>
             

@@ -36,7 +36,7 @@ const HeroSection = () => {
                 </span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-                Premium vehicles at JB AUTOS Machines - Your trusted dealer in Ikate, Lekki. 
+                Premium vehicles at JB AUTOS Machines - Your trusted dealer in Ikate, Lekki-Epe Expressway. 
                 Brand new, foreign used (Toks), and Grade-A Nigerian used cars.
               </p>
             </div>

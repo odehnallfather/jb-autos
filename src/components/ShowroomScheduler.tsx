@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -224,8 +225,8 @@ const ShowroomScheduler = ({ isOpen, onClose }: ShowroomSchedulerProps) => {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit} disabled={createAppointmentMutation.isLoading}>
-            {createAppointmentMutation.isLoading ? "Submitting..." : "Schedule Visit"}
+          <Button type="submit" onClick={handleSubmit} disabled={createAppointmentMutation.isPending}>
+            {createAppointmentMutation.isPending ? "Submitting..." : "Schedule Visit"}
           </Button>
         </DialogFooter>
       </DialogContent>
