@@ -71,28 +71,16 @@ const InventoryList = () => {
     },
   });
 
+  // Simple URL-based image upload (no Supabase storage dependency)
   const uploadMediaFiles = async (files: MediaFile[]) => {
+    // For now, we'll use placeholder URLs or base64 data URLs
+    // In production, you would upload to a proper storage service
     const uploadedUrls: string[] = [];
     
     for (const mediaFile of files) {
-      const fileExt = mediaFile.file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-      const filePath = `car-media/${fileName}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('car-images')
-        .upload(filePath, mediaFile.file);
-
-      if (uploadError) {
-        console.error('Upload error:', uploadError);
-        throw new Error(`Failed to upload ${mediaFile.file.name}`);
-      }
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('car-images')
-        .getPublicUrl(filePath);
-
-      uploadedUrls.push(publicUrl);
+      // Convert to base64 data URL for storage in database
+      // Note: This is not ideal for production - use proper file storage
+      uploadedUrls.push(mediaFile.preview);
     }
     
     return uploadedUrls;
@@ -502,13 +490,6 @@ const InventoryList = () => {
                                   Primary
                                 </div>
                               )}
-                              <button
-                                type="button"
-                                onClick={() => setPrimaryImage(index)}
-                                className="absolute bottom-1 right-1 bg-black/50 text-white text-xs px-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                              >
-                                Set Primary
-                              </button>
                             </div>
                           ))}
                         </div>
