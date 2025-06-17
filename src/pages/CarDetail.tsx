@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -101,9 +100,17 @@ const CarDetail = () => {
             <Card>
               <CardContent className="p-0">
                 <div className="relative">
-                  <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center rounded-t-lg">
-                    <Car className="w-24 h-24 text-gray-400" />
-                  </div>
+                  {car.images && car.images.length > 0 ? (
+                    <img 
+                      src={car.images[0]} 
+                      alt={`${car.make} ${car.model}`}
+                      className="w-full aspect-video object-cover rounded-t-lg"
+                    />
+                  ) : (
+                    <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center rounded-t-lg">
+                      <Car className="w-24 h-24 text-gray-400" />
+                    </div>
+                  )}
                   <Badge className="absolute top-4 left-4 bg-nigerian-green text-white">
                     {getCategory(car.description)}
                   </Badge>
@@ -256,24 +263,23 @@ const CarDetail = () => {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div>
-                  <div className="font-medium">JEFFWORLDWIDE JB AUTOS</div>
-                  <div className="text-sm text-gray-600">RC: 1555217</div>
+                  <div className="font-medium">JB AUTOS MACHINES</div>
+                  <div className="text-sm text-gray-600">Premier car dealership</div>
                 </div>
                 
                 <div>
                   <div className="font-medium">Address</div>
                   <div className="text-sm text-gray-600">
-                    Prince Samuel Adedoyin St, Lekki Peninsula II, Lagos 106104
+                    Ikate, Lekki-Epe Expressway, Lagos, Nigeria
                   </div>
                 </div>
                 
                 <div>
                   <div className="font-medium">Hours</div>
                   <div className="text-sm text-gray-600 space-y-1">
-                    <div>Mon-Thu: 8am-7pm</div>
-                    <div>Fri: 7am-7pm</div>
-                    <div>Sat: 7am-6pm</div>
-                    <div>Sun: Closed</div>
+                    <div>Mon-Sat: 8am-6pm</div>
+                    <div>Sun: 10am-4pm</div>
+                    <div>Public Holidays: Closed</div>
                   </div>
                 </div>
               </CardContent>

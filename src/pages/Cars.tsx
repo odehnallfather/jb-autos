@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -62,7 +61,7 @@ const Cars = () => {
           </p>
           <div className="flex items-center justify-center gap-2 text-lg">
             <MapPin className="w-5 h-5" />
-            <span>Prince Samuel Adedoyin St, Lekki Peninsula II, Lagos</span>
+            <span>Ikate, Lekki-Epe Expressway, Lagos</span>
           </div>
         </div>
       </section>

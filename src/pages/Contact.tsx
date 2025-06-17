@@ -1,4 +1,3 @@
-
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -88,7 +87,6 @@ const Contact = () => {
       icon: Phone,
       title: "Phone Numbers",
       details: [
-        "0803 496 9367",
         "08147319668", 
         "0708 040 1188"
       ]
@@ -97,9 +95,8 @@ const Contact = () => {
       icon: MapPin,
       title: "Showroom Address",
       details: [
-        "Prince Samuel Adedoyin St",
-        "Lekki Peninsula II, Lagos",
-        "Nigeria"
+        "Ikate, Lekki-Epe Expressway",
+        "Lagos, Nigeria"
       ]
     },
     {
@@ -115,7 +112,7 @@ const Contact = () => {
       icon: MessageCircle,
       title: "WhatsApp",
       details: [
-        "0803 496 9367",
+        "08147319668",
         "Quick responses available",
         "Share photos & videos"
       ]
@@ -136,7 +133,7 @@ const Contact = () => {
             Get in touch with Lagos's most trusted car dealership
           </p>
           <div className="text-lg">
-            <span className="font-semibold">JEFFWORLDWIDE JB AUTOS</span> - We're here to help
+            <span className="font-semibold">JB AUTOS MACHINES</span> - We're here to help
           </div>
         </div>
       </section>
@@ -280,7 +277,7 @@ const Contact = () => {
                 className="w-full bg-green-600 hover:bg-green-700"
                 size="lg"
               >
-                <a href="https://wa.me/2348034969367" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/2348147319668" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Chat on WhatsApp
                 </a>
@@ -292,7 +289,7 @@ const Contact = () => {
                 className="w-full"
                 size="lg"
               >
-                <a href="tel:+2348034969367">
+                <a href="tel:+2348147319668">
                   <Phone className="w-4 h-4 mr-2" />
                   Call Now
                 </a>

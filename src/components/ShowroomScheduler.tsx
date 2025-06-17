@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -180,9 +179,9 @@ const ShowroomScheduler: React.FC<ShowroomSchedulerProps> = ({ isOpen, onClose }
             <div className="bg-gray-50 p-4 rounded-lg">
               <h4 className="font-medium mb-2">Showroom Information</h4>
               <div className="text-sm text-gray-600 space-y-1">
-                <p>📍 Prince Samuel Adedoyin St, Lekki Peninsula II, Lagos</p>
+                <p>📍 Ikate, Lekki-Epe Expressway, Lagos</p>
                 <p>🕒 Mon-Sat: 8:00 AM - 6:00 PM</p>
-                <p>📞 0803 496 9367</p>
+                <p>📞 08147319668</p>
               </div>
             </div>
 

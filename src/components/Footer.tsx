@@ -14,9 +14,9 @@ const Footer = () => {
               <span className="text-2xl font-bold">JB AUTOS</span>
             </div>
             <div className="space-y-2">
-              <p className="text-lg font-semibold text-nigerian-green">JB AUTOS Machines</p>
+              <p className="text-lg font-semibold text-nigerian-green">JB AUTOS MACHINES</p>
               <p className="text-gray-400">
-                Dealer in all kinds of cars - Brand New, Toks, and Grade A Nigerian used vehicles. 
+                Premier car dealership in Lagos. Dealer in all kinds of cars - Brand New, Toks, and Grade A Nigerian used vehicles. 
                 Your trusted car dealer in Lagos, Nigeria.
               </p>
             </div>
@@ -91,7 +91,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-gray-400 text-sm">
-              © 2024 JB AUTOS Machines. All rights reserved.
+              © 2024 JB AUTOS MACHINES. All rights reserved.
             </div>
             
             <div className="flex items-center gap-6">

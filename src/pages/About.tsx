@@ -1,4 +1,3 @@
-
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,7 +13,7 @@ const About = () => {
       <section className="bg-gradient-nigerian text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl lg:text-5xl font-bold mb-6">
-            About JEFFWORLDWIDE JB AUTOS
+            About JB AUTOS MACHINES
           </h1>
           <p className="text-xl opacity-90 max-w-3xl mx-auto">
             Your trusted partner in quality automobiles since our founding. 
@@ -30,13 +29,13 @@ const About = () => {
             <h2 className="text-3xl font-bold mb-6">Our Story</h2>
             <div className="space-y-4 text-gray-600">
               <p>
-                JEFFWORLDWIDE JB AUTOS has established itself as one of Lagos's premier 
+                JB AUTOS MACHINES has established itself as one of Lagos's premier 
                 car dealerships, serving customers with integrity and professionalism. 
                 Our commitment to quality and customer satisfaction has made us a trusted 
                 name in the automotive industry.
               </p>
               <p>
-                As a registered company (RC: 1555217), we operate with full transparency 
+                As a registered company, we operate with full transparency 
                 and accountability, ensuring every transaction meets the highest standards 
                 of business practice.
               </p>
@@ -60,7 +59,7 @@ const About = () => {
                 <div>
                   <div className="font-medium">Address</div>
                   <div className="text-gray-600">
-                    Prince Samuel Adedoyin St, Lekki Peninsula II, Lagos 106104
+                    Ikate, Lekki-Epe Expressway, Lagos, Nigeria
                   </div>
                 </div>
                 
@@ -72,7 +71,6 @@ const About = () => {
                   <div className="text-gray-600 space-y-1">
                     <div>Hotline: 08147319668</div>
                     <div>Office: 0708 040 1188</div>
-                    <div>Phone: 0803 496 9367</div>
                   </div>
                 </div>
                 
@@ -82,10 +80,9 @@ const About = () => {
                     Business Hours
                   </div>
                   <div className="text-gray-600 space-y-1">
-                    <div>Monday - Thursday: 8:00 AM - 7:00 PM</div>
-                    <div>Friday: 7:00 AM - 7:00 PM</div>
-                    <div>Saturday: 7:00 AM - 6:00 PM</div>
-                    <div>Sunday: Closed</div>
+                    <div>Monday - Saturday: 8:00 AM - 6:00 PM</div>
+                    <div>Sunday: 10:00 AM - 4:00 PM</div>
+                    <div>Public Holidays: Closed</div>
                   </div>
                 </div>
               </CardContent>

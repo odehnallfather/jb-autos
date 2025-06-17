@@ -65,7 +65,7 @@ const CarModal = ({ car, isOpen, onClose }: CarModalProps) => {
                 <DialogTitle className="text-2xl font-bold">
                   {car.year} {car.make} {car.model}
                 </DialogTitle>
-                <p className="text-gray-600 mt-1">Available at JB AUTOS Machines</p>
+                <p className="text-gray-600 mt-1">Available at JB AUTOS MACHINES</p>
               </div>
               <div className="flex items-center gap-2">
                 <Button variant="ghost" size="sm">
@@ -85,9 +85,17 @@ const CarModal = ({ car, isOpen, onClose }: CarModalProps) => {
                 <Card>
                   <CardContent className="p-0">
                     <div className="relative">
-                      <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center rounded-t-lg">
-                        <Car className="w-24 h-24 text-gray-400" />
-                      </div>
+                      {car.images && car.images.length > 0 ? (
+                        <img 
+                          src={car.images[currentImageIndex]} 
+                          alt={`${car.make} ${car.model}`}
+                          className="w-full aspect-video object-cover rounded-t-lg"
+                        />
+                      ) : (
+                        <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center rounded-t-lg">
+                          <Car className="w-24 h-24 text-gray-400" />
+                        </div>
+                      )}
                       <Badge className={`absolute top-4 left-4 ${getCategoryColor(getCategory(car.description))}`}>
                         {getCategory(car.description)}
                       </Badge>
@@ -100,17 +108,26 @@ const CarModal = ({ car, isOpen, onClose }: CarModalProps) => {
                   </CardContent>
                 </Card>
 
-                {/* Thumbnail images would go here if available */}
-                <div className="grid grid-cols-4 gap-2">
-                  {[1, 2, 3, 4].map((_, idx) => (
-                    <div 
-                      key={idx}
-                      className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-300 transition-colors"
-                    >
-                      <Car className="w-6 h-6 text-gray-400" />
-                    </div>
-                  ))}
-                </div>
+                {/* Thumbnail images */}
+                {car.images && car.images.length > 1 && (
+                  <div className="grid grid-cols-4 gap-2">
+                    {car.images.map((image, idx) => (
+                      <div 
+                        key={idx}
+                        className={`aspect-square bg-gray-200 rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity ${
+                          currentImageIndex === idx ? 'ring-2 ring-nigerian-green' : ''
+                        }`}
+                        onClick={() => setCurrentImageIndex(idx)}
+                      >
+                        <img 
+                          src={image} 
+                          alt={`${car.make} ${car.model} view ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Car Details Section */}
@@ -220,7 +237,7 @@ const CarModal = ({ car, isOpen, onClose }: CarModalProps) => {
 
                 {/* Dealership Info */}
                 <div className="bg-gray-50 rounded-lg p-4">
-                  <h4 className="font-medium mb-2">JB AUTOS Machines</h4>
+                  <h4 className="font-medium mb-2">JB AUTOS MACHINES</h4>
                   <div className="text-sm text-gray-600 space-y-1">
                     <div>📍 Ikate, Lekki-Epe Expressway, Lagos</div>
                     <div>📞 08147319668 | 0708 040 1188</div>

@@ -42,9 +42,17 @@ const CarCard = ({ car }: CarCardProps) => {
       <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => setShowModal(true)}>
         {/* Car Image */}
         <div className="relative">
-          <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-            <Car className="w-16 h-16 text-gray-400" />
-          </div>
+          {car.images && car.images.length > 0 ? (
+            <img 
+              src={car.images[0]} 
+              alt={`${car.make} ${car.model}`}
+              className="w-full aspect-video object-cover"
+            />
+          ) : (
+            <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+              <Car className="w-16 h-16 text-gray-400" />
+            </div>
+          )}
           <Badge className={`absolute top-3 left-3 ${getCategoryColor(getCategory(car.description))}`}>
             {getCategory(car.description)}
           </Badge>
@@ -62,7 +70,7 @@ const CarCard = ({ car }: CarCardProps) => {
               </h3>
               <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
                 <MapPin className="w-4 h-4" />
-                <span>JB AUTOS Machines</span>
+                <span>JB AUTOS MACHINES</span>
               </div>
             </div>
 
