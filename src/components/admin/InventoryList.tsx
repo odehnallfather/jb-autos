@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { StorageService } from '@/lib/storage';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -31,6 +32,7 @@ const InventoryList = () => {
   const [mediaFiles, setMediaFiles] = useState<MediaFile[]>([]);
   const [primaryImageIndex, setPrimaryImageIndex] = useState<number>(0);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
@@ -71,25 +73,65 @@ const InventoryList = () => {
     },
   });
 
-  // Simple URL-based image upload (no Supabase storage dependency)
+  // Upload media files to Supabase storage
   const uploadMediaFiles = async (files: MediaFile[]) => {
-    // For now, we'll use placeholder URLs or base64 data URLs
-    // In production, you would upload to a proper storage service
+    setUploading(true);
     const uploadedUrls: string[] = [];
     
-    for (const mediaFile of files) {
-      // Convert to base64 data URL for storage in database
-      // Note: This is not ideal for production - use proper file storage
-      uploadedUrls.push(mediaFile.preview);
+    try {
+      // Check if storage bucket is accessible
+      const bucketAccessible = await StorageService.checkBucketAccess();
+      if (!bucketAccessible) {
+        toast({
+          title: 'Storage not available',
+          description: 'Using temporary storage. Please set up Supabase storage for production.',
+          variant: 'destructive'
+        });
+        
+        // Fallback to base64 for demo purposes
+        return files.map(file => file.preview);
+      }
+
+      for (let i = 0; i < files.length; i++) {
+        const mediaFile = files[i];
+        setUploadProgress(prev => ({ ...prev, [mediaFile.id]: 0 }));
+        
+        const result = await StorageService.uploadFile(mediaFile.file, 'cars');
+        
+        if (result.error) {
+          toast({
+            title: 'Upload failed',
+            description: `Failed to upload ${mediaFile.file.name}: ${result.error}`,
+            variant: 'destructive'
+          });
+          // Use preview as fallback
+          uploadedUrls.push(mediaFile.preview);
+        } else {
+          uploadedUrls.push(result.url);
+        }
+        
+        setUploadProgress(prev => ({ ...prev, [mediaFile.id]: 100 }));
+      }
+      
+      return uploadedUrls;
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast({
+        title: 'Upload error',
+        description: 'Failed to upload media files. Using temporary storage.',
+        variant: 'destructive'
+      });
+      
+      // Fallback to base64 previews
+      return files.map(file => file.preview);
+    } finally {
+      setUploading(false);
+      setUploadProgress({});
     }
-    
-    return uploadedUrls;
   };
 
   const addCarMutation = useMutation({
     mutationFn: async (carData: any) => {
-      setUploading(true);
-      
       let imageUrls: string[] = [];
       if (mediaFiles.length > 0) {
         imageUrls = await uploadMediaFiles(mediaFiles);
@@ -114,15 +156,10 @@ const InventoryList = () => {
     onError: (error) => {
       toast({ title: 'Failed to add car', description: error.message, variant: 'destructive' });
     },
-    onSettled: () => {
-      setUploading(false);
-    }
   });
 
   const updateCarMutation = useMutation({
     mutationFn: async ({ id, carData }: { id: string; carData: any }) => {
-      setUploading(true);
-      
       let imageUrls: string[] = [];
       if (mediaFiles.length > 0) {
         imageUrls = await uploadMediaFiles(mediaFiles);
@@ -153,9 +190,6 @@ const InventoryList = () => {
     onError: (error) => {
       toast({ title: 'Failed to update car', description: error.message, variant: 'destructive' });
     },
-    onSettled: () => {
-      setUploading(false);
-    }
   });
 
   const deleteMutation = useMutation({
@@ -219,6 +253,12 @@ const InventoryList = () => {
       
       if (type === 'video' && !file.type.startsWith('video/')) {
         toast({ title: 'Invalid file type', description: 'Please select video files only', variant: 'destructive' });
+        return;
+      }
+
+      // Check file size (50MB limit)
+      if (file.size > 50 * 1024 * 1024) {
+        toast({ title: 'File too large', description: `${file.name} exceeds 50MB limit`, variant: 'destructive' });
         return;
       }
 
@@ -417,7 +457,7 @@ const InventoryList = () => {
               <div className="space-y-4">
                 <div>
                   <Label className="text-lg font-semibold">Car Media</Label>
-                  <p className="text-sm text-gray-600">Upload images and videos of the car</p>
+                  <p className="text-sm text-gray-600">Upload images and videos of the car (Max 50MB per file)</p>
                 </div>
 
                 {/* Upload Buttons */}
@@ -444,6 +484,7 @@ const InventoryList = () => {
                     variant="outline"
                     onClick={() => fileInputRef.current?.click()}
                     className="flex items-center gap-2"
+                    disabled={uploading}
                   >
                     <ImageIcon className="w-4 h-4" />
                     Add Images
@@ -454,11 +495,30 @@ const InventoryList = () => {
                     variant="outline"
                     onClick={() => videoInputRef.current?.click()}
                     className="flex items-center gap-2"
+                    disabled={uploading}
                   >
                     <Video className="w-4 h-4" />
                     Add Videos
                   </Button>
                 </div>
+
+                {/* Upload Progress */}
+                {uploading && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Upload className="w-4 h-4 text-blue-600 animate-pulse" />
+                      <span className="text-sm font-medium text-blue-700">Uploading media files...</span>
+                    </div>
+                    {Object.entries(uploadProgress).map(([id, progress]) => (
+                      <div key={id} className="w-full bg-blue-200 rounded-full h-2 mb-1">
+                        <div 
+                          className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                          style={{ width: `${progress}%` }}
+                        ></div>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 {/* Media Preview */}
                 {mediaFiles.length > 0 && (
@@ -788,6 +848,7 @@ const InventoryList = () => {
                   variant="outline"
                   onClick={() => fileInputRef.current?.click()}
                   className="flex items-center gap-2"
+                  disabled={uploading}
                 >
                   <ImageIcon className="w-4 h-4" />
                   Add Images
@@ -798,6 +859,7 @@ const InventoryList = () => {
                   variant="outline"
                   onClick={() => videoInputRef.current?.click()}
                   className="flex items-center gap-2"
+                  disabled={uploading}
                 >
                   <Video className="w-4 h-4" />
                   Add Videos
