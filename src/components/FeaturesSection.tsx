@@ -1,6 +1,7 @@
-
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -22,50 +23,55 @@ import { Link } from 'react-router-dom';
 import ShowroomScheduler from './ShowroomScheduler';
 import ElevenLabsWidget from './ElevenLabsWidget';
 import LiveChatWidget from './LiveChatWidget';
+import type { Tables } from '@/integrations/supabase/types';
 
 const FeaturesSection = () => {
   const [showScheduler, setShowScheduler] = useState(false);
   const [showVoiceWidget, setShowVoiceWidget] = useState(false);
   const [showLiveChat, setShowLiveChat] = useState(false);
 
-  const sampleCars = [
-    {
-      id: 1,
-      make: "Toyota",
-      model: "Camry",
-      year: 2020,
-      price: "₦7,500,000",
-      mileage: "45,000 km",
-      fuel: "Petrol",
-      image: "/placeholder.svg",
-      status: "Available",
-      features: ["AC", "Leather Seats", "Navigation"]
+  // Fetch real cars from Supabase
+  const { data: cars, isLoading: carsLoading } = useQuery({
+    queryKey: ['featured-cars'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('cars')
+        .select('*')
+        .eq('status', 'available')
+        .order('created_at', { ascending: false })
+        .limit(3);
+      
+      if (error) {
+        console.error('Error fetching cars:', error);
+        return [];
+      }
+      return data as Tables<'cars'>[];
     },
-    {
-      id: 2,
-      make: "Honda",
-      model: "Accord",
-      year: 2019,
-      price: "₦6,200,000",
-      mileage: "38,000 km",
-      fuel: "Petrol",
-      image: "/placeholder.svg",
-      status: "Available",
-      features: ["Sunroof", "Backup Camera", "Bluetooth"]
-    },
-    {
-      id: 3,
-      make: "Lexus",
-      model: "ES 350",
-      year: 2021,
-      price: "₦15,800,000",
-      mileage: "22,000 km",
-      fuel: "Petrol",
-      image: "/placeholder.svg",
-      status: "Reserved",
-      features: ["Premium Sound", "Memory Seats", "HUD"]
+  });
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
+  const getCategory = (description: string | null) => {
+    if (!description) return 'Grade-A';
+    const desc = description.toLowerCase();
+    if (desc.includes('brand new')) return 'Brand New';
+    if (desc.includes('toks')) return 'Toks';
+    return 'Grade-A';
+  };
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'Brand New': return 'bg-green-100 text-green-800';
+      case 'Toks': return 'bg-blue-100 text-blue-800';
+      default: return 'bg-orange-100 text-orange-800';
     }
-  ];
+  };
 
   const features = [
     {
@@ -129,87 +135,143 @@ const FeaturesSection = () => {
             </div>
 
             {/* Inventory Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {sampleCars.map((car) => (
-                <Card key={car.id} className="card-hover border-0 shadow-lg overflow-hidden cursor-pointer" onClick={() => window.open(`/cars/${car.id}`, '_blank')}>
-                  {/* Car Image */}
-                  <div className="relative">
-                    <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                      <Car className="w-16 h-16 text-gray-400" />
-                    </div>
-                    <Badge className={`absolute top-3 left-3 ${car.status === 'Available' ? 'bg-nigerian-green' : 'bg-orange-500'} text-white`}>
-                      {car.status}
-                    </Badge>
-                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1">
-                      <span className="text-sm font-bold text-nigerian-green">{car.price}</span>
-                    </div>
-                  </div>
-
-                  <CardContent className="p-6">
-                    {/* Car Details */}
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="text-xl font-bold">
-                          {car.year} {car.make} {car.model}
-                        </h3>
-                        <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
-                          <MapPin className="w-4 h-4" />
-                          <span>JB AUTOS Showroom</span>
+            {carsLoading ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                {[1, 2, 3].map((_, idx) => (
+                  <Card key={idx} className="card-hover border-0 shadow-lg overflow-hidden animate-pulse">
+                    <div className="aspect-video bg-gray-200"></div>
+                    <CardContent className="p-6">
+                      <div className="space-y-4">
+                        <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="h-4 bg-gray-200 rounded"></div>
+                          <div className="h-4 bg-gray-200 rounded"></div>
                         </div>
                       </div>
-
-                      {/* Key Stats */}
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4 text-gray-400" />
-                          <span>{car.mileage}</span>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : cars && cars.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                {cars.map((car) => (
+                  <Card key={car.id} className="card-hover border-0 shadow-lg overflow-hidden cursor-pointer" onClick={() => window.open(`/cars/${car.id}`, '_blank')}>
+                    {/* Car Image */}
+                    <div className="relative">
+                      {car.images && car.images.length > 0 ? (
+                        <img 
+                          src={car.images[0]} 
+                          alt={`${car.make} ${car.model}`}
+                          className="w-full aspect-video object-cover"
+                        />
+                      ) : (
+                        <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                          <Car className="w-16 h-16 text-gray-400" />
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Fuel className="w-4 h-4 text-gray-400" />
-                          <span>{car.fuel}</span>
-                        </div>
-                      </div>
-
-                      {/* Features */}
-                      <div className="flex flex-wrap gap-2">
-                        {car.features.map((feature, idx) => (
-                          <Badge key={idx} variant="secondary" className="text-xs">
-                            {feature}
-                          </Badge>
-                        ))}
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className="grid grid-cols-2 gap-3 pt-4">
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="flex items-center gap-1"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setShowLiveChat(true);
-                          }}
-                        >
-                          <MessageCircle className="w-4 h-4" />
-                          Inquire
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          className="bg-gradient-nigerian hover:opacity-90 flex items-center gap-1"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setShowVoiceWidget(true);
-                          }}
-                        >
-                          <Phone className="w-4 h-4" />
-                          Call
-                        </Button>
+                      )}
+                      <Badge className={`absolute top-3 left-3 ${getCategoryColor(getCategory(car.description))}`}>
+                        {getCategory(car.description)}
+                      </Badge>
+                      <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1">
+                        <span className="text-sm font-bold text-nigerian-green">{formatPrice(Number(car.price))}</span>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+
+                    <CardContent className="p-6">
+                      {/* Car Details */}
+                      <div className="space-y-4">
+                        <div>
+                          <h3 className="text-xl font-bold">
+                            {car.year} {car.make} {car.model}
+                          </h3>
+                          <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
+                            <MapPin className="w-4 h-4" />
+                            <span>JB AUTOS MACHINES</span>
+                          </div>
+                        </div>
+
+                        {/* Key Stats */}
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          {car.mileage && (
+                            <div className="flex items-center gap-2">
+                              <Calendar className="w-4 h-4 text-gray-400" />
+                              <span>{car.mileage.toLocaleString()} km</span>
+                            </div>
+                          )}
+                          {car.fuel_type && (
+                            <div className="flex items-center gap-2">
+                              <Fuel className="w-4 h-4 text-gray-400" />
+                              <span>{car.fuel_type}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Features */}
+                        {car.features && car.features.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {car.features.slice(0, 3).map((feature, idx) => (
+                              <Badge key={idx} variant="secondary" className="text-xs">
+                                {feature}
+                              </Badge>
+                            ))}
+                            {car.features.length > 3 && (
+                              <Badge variant="secondary" className="text-xs">
+                                +{car.features.length - 3} more
+                              </Badge>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Action Buttons */}
+                        <div className="grid grid-cols-2 gap-3 pt-4">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="flex items-center gap-1"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setShowLiveChat(true);
+                            }}
+                          >
+                            <MessageCircle className="w-4 h-4" />
+                            Inquire
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            className="bg-gradient-nigerian hover:opacity-90 flex items-center gap-1"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setShowVoiceWidget(true);
+                            }}
+                          >
+                            <Phone className="w-4 h-4" />
+                            Call
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 mb-12">
+                <Car className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-600 mb-2">No cars available</h3>
+                <p className="text-gray-500 mb-6">
+                  We're currently updating our inventory. Please check back soon or contact us directly.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button onClick={() => setShowLiveChat(true)} className="bg-gradient-nigerian hover:opacity-90">
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Contact Us
+                  </Button>
+                  <Button variant="outline" onClick={() => setShowScheduler(true)}>
+                    Visit Showroom
+                  </Button>
+                </div>
+              </div>
+            )}
 
             {/* CTA Section */}
             <div className="text-center space-y-6">
@@ -339,7 +401,9 @@ const FeaturesSection = () => {
                     </div>
                     <div>
                       <div className="font-semibold">Quality Vehicles</div>
-                      <div className="text-sm text-gray-500">50+ cars in stock</div>
+                      <div className="text-sm text-gray-500">
+                        {cars && cars.length > 0 ? `${cars.length}+ cars in stock` : 'Premium inventory'}
+                      </div>
                     </div>
                   </div>
                 </Card>
