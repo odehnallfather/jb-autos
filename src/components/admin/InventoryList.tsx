@@ -54,10 +54,14 @@ const InventoryList = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+  // Optimized query with selective fields and better caching
   const { data: cars, isLoading } = useQuery({
-    queryKey: ['cars', searchTerm, statusFilter],
+    queryKey: ['admin-cars', searchTerm, statusFilter],
     queryFn: async () => {
-      let query = supabase.from('cars').select('*').order('created_at', { ascending: false });
+      let query = supabase
+        .from('cars')
+        .select('id, make, model, year, price, mileage, fuel_type, transmission, color, description, features, images, status, created_at')
+        .order('created_at', { ascending: false });
       
       if (searchTerm) {
         query = query.or(`make.ilike.%${searchTerm}%,model.ilike.%${searchTerm}%`);
@@ -71,6 +75,9 @@ const InventoryList = () => {
       if (error) throw error;
       return data;
     },
+    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
+    cacheTime: 5 * 60 * 1000, // Keep in cache for 5 minutes
+    refetchOnWindowFocus: false,
   });
 
   // Upload media files to Supabase storage
@@ -148,7 +155,9 @@ const InventoryList = () => {
       if (error) throw error;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-cars'] });
       queryClient.invalidateQueries({ queryKey: ['cars'] });
+      queryClient.invalidateQueries({ queryKey: ['featured-cars'] });
       setShowAddDialog(false);
       resetForm();
       toast({ title: 'Car added successfully' });
@@ -182,7 +191,9 @@ const InventoryList = () => {
       if (error) throw error;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-cars'] });
       queryClient.invalidateQueries({ queryKey: ['cars'] });
+      queryClient.invalidateQueries({ queryKey: ['featured-cars'] });
       setEditingCar(null);
       resetForm();
       toast({ title: 'Car updated successfully' });
@@ -198,7 +209,9 @@ const InventoryList = () => {
       if (error) throw error;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-cars'] });
       queryClient.invalidateQueries({ queryKey: ['cars'] });
+      queryClient.invalidateQueries({ queryKey: ['featured-cars'] });
       toast({ title: 'Car deleted successfully' });
     },
     onError: (error) => {
@@ -667,6 +680,7 @@ const InventoryList = () => {
                     src={car.images[0]} 
                     alt={`${car.make} ${car.model}`}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
               ) : (
@@ -877,6 +891,7 @@ const InventoryList = () => {
                           src={imageUrl}
                           alt={`${editingCar.make} ${editingCar.model}`}
                           className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                          loading="lazy"
                         />
                       </div>
                     ))}

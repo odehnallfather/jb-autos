@@ -30,13 +30,13 @@ const FeaturesSection = () => {
   const [showVoiceWidget, setShowVoiceWidget] = useState(false);
   const [showLiveChat, setShowLiveChat] = useState(false);
 
-  // Fetch real cars from Supabase
+  // Optimized query with caching and minimal data fetching
   const { data: cars, isLoading: carsLoading } = useQuery({
     queryKey: ['featured-cars'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('cars')
-        .select('*')
+        .select('id, make, model, year, price, mileage, fuel_type, features, images, description, status')
         .eq('status', 'available')
         .order('created_at', { ascending: false })
         .limit(3);
@@ -47,6 +47,10 @@ const FeaturesSection = () => {
       }
       return data as Tables<'cars'>[];
     },
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    cacheTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+    refetchOnWindowFocus: false, // Don't refetch when window regains focus
+    refetchOnMount: false, // Don't refetch on component mount if data exists
   });
 
   const formatPrice = (price: number) => {
@@ -164,6 +168,8 @@ const FeaturesSection = () => {
                           src={car.images[0]} 
                           alt={`${car.make} ${car.model}`}
                           className="w-full aspect-video object-cover"
+                          loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <div className="aspect-video bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">

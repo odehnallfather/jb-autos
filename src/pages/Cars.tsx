@@ -16,12 +16,13 @@ const Cars = () => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 50000000]);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Optimized query with selective fields and better caching
   const { data: cars, isLoading } = useQuery({
     queryKey: ['cars', categoryFilter, searchTerm],
     queryFn: async () => {
       let query = supabase
         .from('cars')
-        .select('*')
+        .select('id, make, model, year, price, mileage, fuel_type, transmission, color, description, features, images, status, created_at')
         .eq('status', 'available')
         .order('created_at', { ascending: false });
 
@@ -33,6 +34,12 @@ const Cars = () => {
       if (error) throw error;
       return data as CarData[];
     },
+    staleTime: 3 * 60 * 1000, // Cache for 3 minutes
+    cacheTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    // Enable background refetching for better UX
+    refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes in background
   });
 
   const filteredCars = cars?.filter(car => {
