@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -8,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
-import { X } from 'lucide-react';
+import { X, MessageCircle } from 'lucide-react';
 import type { Tables } from '@/integrations/supabase/types';
 
 interface ContactCarFormProps {
@@ -39,7 +38,7 @@ const ContactCarForm = ({ car, isOpen, onClose }: ContactCarFormProps) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['leads'] });
-      toast({ title: 'Inquiry sent successfully!', description: 'We will contact you soon.' });
+      toast({ title: 'Message sent successfully!', description: 'We will contact you soon.' });
       onClose();
       setFormData({
         customerName: '',
@@ -50,7 +49,7 @@ const ContactCarForm = ({ car, isOpen, onClose }: ContactCarFormProps) => {
     },
     onError: (error) => {
       toast({ 
-        title: 'Failed to send inquiry', 
+        title: 'Failed to send message', 
         description: error.message, 
         variant: 'destructive' 
       });
@@ -88,7 +87,10 @@ const ContactCarForm = ({ car, isOpen, onClose }: ContactCarFormProps) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Inquire About This Car</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            <MessageCircle className="w-5 h-5 text-nigerian-green" />
+            Chat About This Car
+          </DialogTitle>
         </DialogHeader>
         
         <div className="mb-4 p-3 bg-gray-50 rounded-lg">
@@ -162,7 +164,7 @@ const ContactCarForm = ({ car, isOpen, onClose }: ContactCarFormProps) => {
               disabled={createLeadMutation.isPending}
               className="flex-1 bg-gradient-nigerian hover:opacity-90"
             >
-              {createLeadMutation.isPending ? 'Sending...' : 'Send Inquiry'}
+              {createLeadMutation.isPending ? 'Sending...' : 'Start Chat'}
             </Button>
           </div>
         </form>

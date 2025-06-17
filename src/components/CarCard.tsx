@@ -8,9 +8,10 @@ import type { Tables } from '@/integrations/supabase/types';
 
 interface CarCardProps {
   car: Tables<'cars'>;
+  onChatClick?: () => void;
 }
 
-const CarCard = ({ car }: CarCardProps) => {
+const CarCard = ({ car, onChatClick }: CarCardProps) => {
   const [showModal, setShowModal] = useState(false);
 
   const formatPrice = (price: number) => {
@@ -122,10 +123,13 @@ const CarCard = ({ car }: CarCardProps) => {
                   variant="outline" 
                   size="sm" 
                   className="flex items-center gap-1"
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onChatClick?.();
+                  }}
                 >
                   <MessageCircle className="w-4 h-4" />
-                  Inquire
+                  Chat
                 </Button>
                 <Button 
                   variant="outline" 

@@ -23,9 +23,10 @@ interface CarModalProps {
   car: Tables<'cars'> | null;
   isOpen: boolean;
   onClose: () => void;
+  onChatClick?: () => void;
 }
 
-const CarModal = ({ car, isOpen, onClose }: CarModalProps) => {
+const CarModal = ({ car, isOpen, onClose, onChatClick }: CarModalProps) => {
   const [showContactForm, setShowContactForm] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -53,6 +54,11 @@ const CarModal = ({ car, isOpen, onClose }: CarModalProps) => {
       case 'Toks': return 'bg-blue-100 text-blue-800';
       default: return 'bg-orange-100 text-orange-800';
     }
+  };
+
+  const handleChatClick = () => {
+    onClose(); // Close the modal first
+    onChatClick?.(); // Then open the chat
   };
 
   return (
@@ -211,12 +217,12 @@ const CarModal = ({ car, isOpen, onClose }: CarModalProps) => {
                 {/* Action Buttons */}
                 <div className="space-y-3 pt-4 border-t">
                   <Button
-                    onClick={() => setShowContactForm(true)}
+                    onClick={handleChatClick}
                     className="w-full bg-gradient-nigerian hover:opacity-90"
                     size="lg"
                   >
                     <MessageCircle className="w-4 h-4 mr-2" />
-                    Send Inquiry
+                    Chat with Us
                   </Button>
                   
                   <div className="grid grid-cols-2 gap-3">

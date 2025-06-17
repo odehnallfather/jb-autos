@@ -85,6 +85,10 @@ const FeaturesSection = () => {
     setShowCarModal(true);
   };
 
+  const handleChatClick = () => {
+    setShowLiveChat(true);
+  };
+
   const features = [
     {
       icon: Shield,
@@ -245,11 +249,11 @@ const FeaturesSection = () => {
                             className="flex items-center gap-1"
                             onClick={(e) => {
                               e.stopPropagation();
-                              setShowLiveChat(true);
+                              handleChatClick();
                             }}
                           >
                             <MessageCircle className="w-4 h-4" />
-                            Inquire
+                            Chat
                           </Button>
                           <Button 
                             size="sm" 
@@ -276,9 +280,9 @@ const FeaturesSection = () => {
                   We're currently updating our inventory. Please check back soon or contact us directly.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button onClick={() => setShowLiveChat(true)} className="bg-gradient-nigerian hover:opacity-90">
+                  <Button onClick={handleChatClick} className="bg-gradient-nigerian hover:opacity-90">
                     <MessageCircle className="w-4 h-4 mr-2" />
-                    Contact Us
+                    Chat with Us
                   </Button>
                   <Button variant="outline" onClick={() => setShowScheduler(true)}>
                     Visit Showroom
@@ -456,6 +460,7 @@ const FeaturesSection = () => {
           setShowCarModal(false);
           setSelectedCar(null);
         }}
+        onChatClick={handleChatClick}
       />
     </>
   );
