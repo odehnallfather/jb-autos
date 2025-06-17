@@ -23,12 +23,15 @@ import { Link } from 'react-router-dom';
 import ShowroomScheduler from './ShowroomScheduler';
 import ElevenLabsWidget from './ElevenLabsWidget';
 import LiveChatWidget from './LiveChatWidget';
+import CarModal from './CarModal';
 import type { Tables } from '@/integrations/supabase/types';
 
 const FeaturesSection = () => {
   const [showScheduler, setShowScheduler] = useState(false);
   const [showVoiceWidget, setShowVoiceWidget] = useState(false);
   const [showLiveChat, setShowLiveChat] = useState(false);
+  const [selectedCar, setSelectedCar] = useState<Tables<'cars'> | null>(null);
+  const [showCarModal, setShowCarModal] = useState(false);
 
   // Optimized query with caching and minimal data fetching
   const { data: cars, isLoading: carsLoading } = useQuery({
@@ -75,6 +78,11 @@ const FeaturesSection = () => {
       case 'Toks': return 'bg-blue-100 text-blue-800';
       default: return 'bg-orange-100 text-orange-800';
     }
+  };
+
+  const handleCarClick = (car: Tables<'cars'>) => {
+    setSelectedCar(car);
+    setShowCarModal(true);
   };
 
   const features = [
@@ -160,7 +168,7 @@ const FeaturesSection = () => {
             ) : cars && cars.length > 0 ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 {cars.map((car) => (
-                  <Card key={car.id} className="card-hover border-0 shadow-lg overflow-hidden cursor-pointer" onClick={() => window.open(`/cars/${car.id}`, '_blank')}>
+                  <Card key={car.id} className="card-hover border-0 shadow-lg overflow-hidden cursor-pointer" onClick={() => handleCarClick(car)}>
                     {/* Car Image */}
                     <div className="relative">
                       {car.images && car.images.length > 0 ? (
@@ -438,6 +446,16 @@ const FeaturesSection = () => {
       <LiveChatWidget 
         isOpen={showLiveChat} 
         onClose={() => setShowLiveChat(false)} 
+      />
+      
+      {/* Car Modal */}
+      <CarModal 
+        car={selectedCar}
+        isOpen={showCarModal}
+        onClose={() => {
+          setShowCarModal(false);
+          setSelectedCar(null);
+        }}
       />
     </>
   );
