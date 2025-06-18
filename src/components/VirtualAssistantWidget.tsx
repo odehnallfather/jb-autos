@@ -26,7 +26,7 @@ interface Message {
 const VirtualAssistantWidget: React.FC<VirtualAssistantWidgetProps> = ({ 
   isOpen, 
   onClose, 
-  n8nWebhookUrl = 'YOUR_N8N_WEBHOOK_URL' 
+  n8nWebhookUrl 
 }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -58,9 +58,28 @@ const VirtualAssistantWidget: React.FC<VirtualAssistantWidgetProps> = ({
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const sendToN8n = async (messageData: any) => {
+  const isValidWebhookUrl = (url?: string): boolean => {
+    if (!url || url === 'YOUR_N8N_WEBHOOK_URL' || url.trim() === '') {
+      return false;
+    }
     try {
-      const response = await fetch(n8nWebhookUrl, {
+      new URL(url);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const sendToN8n = async (messageData: any) => {
+    if (!isValidWebhookUrl(n8nWebhookUrl)) {
+      // Return a mock response when no valid webhook URL is configured
+      return {
+        message: "I received your message. Please note that the n8n webhook is not configured, so this is a simulated response. To enable full AI functionality, please configure a valid n8n webhook URL."
+      };
+    }
+
+    try {
+      const response = await fetch(n8nWebhookUrl!, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
